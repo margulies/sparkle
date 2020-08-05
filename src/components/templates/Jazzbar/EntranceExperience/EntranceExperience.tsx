@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./EntranceExperience.scss";
 import { updateTheme } from "pages/VenuePage/helpers";
 import { useFirestoreConnect } from "react-redux-firebase";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import WithNavigationBar from "components/organisms/WithNavigationBar";
 import InformationCard from "components/molecules/InformationCard";
 import dayjs from "dayjs";
@@ -66,6 +66,8 @@ const JazzbarEntranceExperience: React.FunctionComponent = () => {
       event.start_utc_seconds + event.duration_minutes * ONE_MINUTE_IN_SECONDS >
       Date.now() / 1000
   );
+
+  const isUserVenueOwner = user && venue?.owners?.includes(user.uid);
 
   venue && updateTheme(venue);
 
@@ -298,6 +300,21 @@ const JazzbarEntranceExperience: React.FunctionComponent = () => {
                     )}
                   </>
                 )}
+              {isUserVenueOwner && (
+                <InformationCard title="Enter the venue as an admin">
+                  <div className="button-container">
+                    <div>This is a fake event. Only you can see it.</div>
+                    <Link to={`/v/${venueId}/live`}>
+                      <button
+                        role="link"
+                        className="btn btn-primary buy-tickets-button"
+                      >
+                        Join the event
+                      </button>
+                    </Link>
+                  </div>
+                </InformationCard>
+              )}
             </div>
           </div>
         </div>
