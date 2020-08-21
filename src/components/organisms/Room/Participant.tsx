@@ -6,9 +6,10 @@ import UserProfilePicture from "components/molecules/UserProfilePicture";
 import Video from "twilio-video";
 import { User } from "types/User";
 
-interface ParticipantProps {
+export interface ParticipantProps {
   participant: Video.Participant;
   profileData: User;
+  profileDataId: string;
   bartender?: User;
 }
 
