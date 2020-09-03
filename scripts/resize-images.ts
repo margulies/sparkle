@@ -38,7 +38,7 @@ import { GifUtil } from "gifwrap";
 import p from "phin";
 
 // Project ID.
-const APP_PREFIX = "co-reality-staging";
+const APP_PREFIX = "sparkle-verse";
 // Max filesize permitted.
 const MAX_SIZE_BYTES = 400 * 1024;
 // If true, backup files. If false, run.
@@ -50,12 +50,12 @@ const SELECTIVELY_PROCESS_FILE_NAME_PARTS = [
   // "HUGE_ANIMATED_GIF.gif",
 ];
 const ACCEPTED_MIME_TYPES = [
-  "image/png",
+  // "image/png",
   "image/jpg",
   "image/jpeg",
-  "image/tiff",
-  "image/bmp",
-  "image/gif",
+  // "image/tiff",
+  // "image/bmp",
+  // "image/gif",
 ];
 
 admin.initializeApp({
@@ -170,38 +170,37 @@ const main = async () => {
         file.metadata.contentType === "image/gif" ||
         file.name.endsWith("gif")
       ) {
-        const response = await p(signedurl);
-        if ("headers" in response && "location" in response.headers) {
-          console.error(
-            `Got redirect to ${response.headers.location}; skipping`
-          );
-          return;
-        }
-
-        if (
-          typeof response.body !== "object" ||
-          !Buffer.isBuffer(response.body)
-        ) {
-          const msg =
-            "Could not load Buffer from <" +
-            signedurl +
-            "> " +
-            "(HTTP: " +
-            response.statusCode +
-            ")";
-          console.error(msg);
-          return;
-        }
-        const gifImage = await GifUtil.read(response.body);
-        GifUtil.shareAsJimp(jimp, gifImage.frames[0]).resize(
-          Math.floor(gifImage.width / 2),
-          jimp.AUTO
-        );
-        await GifUtil.write(resizedFilePath, [gifImage.frames[0]], gifImage);
+        // const response = await p(signedurl);
+        // if ("headers" in response && "location" in response.headers) {
+        //   console.error(
+        //     `Got redirect to ${response.headers.location}; skipping`
+        //   );
+        //   return;
+        // }
+        // if (
+        //   typeof response.body !== "object" ||
+        //   !Buffer.isBuffer(response.body)
+        // ) {
+        //   const msg =
+        //     "Could not load Buffer from <" +
+        //     signedurl +
+        //     "> " +
+        //     "(HTTP: " +
+        //     response.statusCode +
+        //     ")";
+        //   console.error(msg);
+        //   return;
+        // }
+        // const gifImage = await GifUtil.read(response.body);
+        // GifUtil.shareAsJimp(jimp, gifImage.frames[0]).resize(
+        //   Math.floor(gifImage.width / 2),
+        //   jimp.AUTO
+        // );
+        // await GifUtil.write(resizedFilePath, [gifImage.frames[0]], gifImage);
       } else {
         const jimpImage = await jimp.read(signedurl);
-        jimpImage.resize(Math.floor(jimpImage.getWidth() / 2), jimp.AUTO);
-        await jimpImage.writeAsync(resizedFilePath);
+        // jimpImage.resize(Math.floor(jimpImage.getWidth() / 2), jimp.AUTO);
+        await jimpImage.quality(60).writeAsync(resizedFilePath);
       }
 
       console.log(
