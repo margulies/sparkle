@@ -40,10 +40,12 @@ const ProfilePictureInput: React.FunctionComponent<PropsType> = ({
     const file = e.target.files[0];
     if (file.size > MAX_IMAGE_FILE_SIZE_BYTES) {
       setError(
-        `File size limit is 600kB. You can shrink images at ${GIF_RESIZER_URL}`
+        `File size limit is 2mb. You can shrink images at ${GIF_RESIZER_URL}`
       );
       return;
     }
+    console.log(file);
+
     const storageRef = firebase.storage().ref();
     // TODO: add rule to forbid other users to edit a user's image
     const profilePictureRef = storageRef.child(
