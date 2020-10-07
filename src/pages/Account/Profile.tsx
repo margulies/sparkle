@@ -45,6 +45,11 @@ const Profile: React.FunctionComponent<PropsType> = ({ location }) => {
   const onSubmit = async (data: ProfileFormData) => {
     if (!user) return;
     await updateUserProfile(user.uid, data);
+    if (returnUrl === "/in/jamonline") {
+      return history.push(
+        `/account/questions?venueId=${returnUrl.split("/")[2]}`
+      );
+    }
     history.push(
       IS_BURN ? `/enter/step3` : returnUrl ? returnUrl : venueInsideUrl(venueId)
     );
