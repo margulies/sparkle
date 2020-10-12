@@ -160,6 +160,11 @@ export const BURN_VENUE_TEMPLATES: Array<Template> = [
       "Add an auditorium with an embedded video and seats for people to take to watch the experience.",
     ],
   },
+  {
+    template: VenueTemplate.playa,
+    name: "Playa",
+    description: ["Add a Playa."],
+  },
 ];
 
 export const ALL_VENUE_TEMPLATES: Array<Template> = [
