@@ -23,8 +23,8 @@ const UserInformationContent: React.FunctionComponent<PropsType> = ({
   hideModal,
 }) => {
   const { user, profile } = useUser();
-  const profileQuestions = useSelector(
-    (state) => state.firestore.data.currentVenue?.profile_questions
+  const currentVenue = useSelector(
+    (state) => state.firestore.data.currentVenue
   );
   const venueId = useVenueId();
 
@@ -59,6 +59,8 @@ const UserInformationContent: React.FunctionComponent<PropsType> = ({
       updateUserProfile(user.uid, { mirrorVideo: profile.mirrorVideo });
     }
   };
+
+  const profileQuestions = currentVenue?.profile_questions;
 
   return (
     <>

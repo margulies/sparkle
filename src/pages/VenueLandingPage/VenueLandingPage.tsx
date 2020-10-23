@@ -24,7 +24,7 @@ import { WithId } from "utils/id";
 import { isUserAMember } from "utils/isUserAMember";
 import { ONE_MINUTE_IN_SECONDS } from "utils/time";
 import "./VenueLandingPage.scss";
-import { venueEntranceUrl } from "utils/url";
+import { venueEntranceUrl, venueInsideUrl } from "utils/url";
 
 export interface VenueLandingPageProps {
   venue: Firestore["data"]["currentVenue"];
@@ -112,6 +112,11 @@ export const VenueLandingPage: React.FunctionComponent<VenueLandingPageProps> = 
     setIsAuthenticationModalOpen(false);
   };
 
+  const onJoinEventClick = () => {
+    const url = user ? venueInsideUrl(venueId) : venueEntranceUrl(venueId);
+    window.open(url, "_self");
+  };
+
   return (
     <WithNavigationBar>
       <div className="container venue-entrance-experience-container">
@@ -149,7 +154,7 @@ export const VenueLandingPage: React.FunctionComponent<VenueLandingPageProps> = 
             futureOrOngoingVenueEvents.length === 0) && (
             <button
               className="btn btn-primary btn-block btn-centered"
-              onClick={() => (window.location.href = venueEntranceUrl(venueId))}
+              onClick={onJoinEventClick}
             >
               Join the event
             </button>

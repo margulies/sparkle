@@ -13,10 +13,6 @@ import { RoomModal } from "./RoomModal";
 import ChatDrawer from "components/organisms/ChatDrawer";
 import { useVenueId } from "hooks/useVenueId";
 
-type Props = {
-  venueName: string;
-};
-
 const DEFAULT_COLUMNS = 40;
 const DEFAULT_ROWS = 25;
 
@@ -133,6 +129,7 @@ const AvatarGrid = () => {
   const upPress = useKeyPress("ArrowUp");
   const leftPress = useKeyPress("ArrowLeft");
   const rightPress = useKeyPress("ArrowRight");
+  const enterPress = useKeyPress("Enter");
 
   const isRoomBorder = (row: number, column: number) => {
     const borders = {
@@ -210,6 +207,12 @@ const AvatarGrid = () => {
     const { row, column } = currentPosition;
     if (row && column) {
       const seatTaken = (r: number, c: number) => partygoersBySeat?.[r]?.[c];
+
+      if (enterPress && !isRoomModalOpen && isHittingRoom) {
+        // setIsRoomModalOpen(true);
+        window.open(selectedRoom?.url, "_blank", "noopener noreferrer");
+      }
+
       if (downPress) {
         if (
           row + 1 > DEFAULT_ROWS ||

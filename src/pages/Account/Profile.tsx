@@ -11,6 +11,7 @@ import { IS_BURN } from "secrets";
 import { venueInsideUrl } from "utils/url";
 import getQueryParameters from "utils/getQueryParameters";
 import { DEFAULT_VENUE, PLAYA_VENUE_NAME } from "settings";
+import { useSelector } from "hooks/useSelector";
 
 export interface ProfileFormData {
   partyName: string;
@@ -24,9 +25,10 @@ interface PropsType {
 const Profile: React.FunctionComponent<PropsType> = ({ location }) => {
   const history = useHistory();
   const { user } = useUser();
-  const venueId =
-    getQueryParameters(window.location.search)?.venueId?.toString() ??
-    DEFAULT_VENUE;
+  const currentVenue = useSelector(
+    (state) => state.firestore.data.currentVenue
+  );
+  const venueId = currentVenue?.name ?? DEFAULT_VENUE;
   const returnUrl = getQueryParameters(
     window.location.search
   )?.returnUrl?.toString();
@@ -45,6 +47,7 @@ const Profile: React.FunctionComponent<PropsType> = ({ location }) => {
   const onSubmit = async (data: ProfileFormData) => {
     if (!user) return;
     await updateUserProfile(user.uid, data);
+    console.log(venueInsideUrl(venueId));
     history.push(
       IS_BURN ? `/enter/step3` : returnUrl ? returnUrl : venueInsideUrl(venueId)
     );

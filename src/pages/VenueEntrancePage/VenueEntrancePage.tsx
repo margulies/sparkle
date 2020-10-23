@@ -11,23 +11,22 @@ import { Redirect, useHistory, useParams } from "react-router-dom";
 import { EntranceStepTemplate } from "types/EntranceStep";
 import { venueEntranceUrl, venueInsideUrl } from "utils/url";
 
+interface ParamsTypes {
+  step: string;
+  venueId: string;
+}
+
 export const VenueEntrancePage: React.FunctionComponent<{}> = () => {
   const { user, profile } = useUser();
   const firebase = useFirebase();
   const history = useHistory();
-  const { step, venueId } = useParams();
+  const { step, venueId } = useParams<ParamsTypes>();
   useConnectCurrentVenue();
   const venue = useSelector((state) => state.firestore.data.currentVenue);
 
   if (!user || !profile) {
     return (
-      <WithNavigationBar>
-        <AuthenticationModal
-          show={true}
-          onHide={() => {}}
-          showAuth="register"
-        />
-      </WithNavigationBar>
+      <AuthenticationModal show={true} onHide={() => {}} showAuth="register" />
     );
   }
 
@@ -36,6 +35,7 @@ export const VenueEntrancePage: React.FunctionComponent<{}> = () => {
   }
 
   if (
+    !user ||
     !(parseInt(step) > 0) ||
     !venue.entrance ||
     !venue.entrance.length ||

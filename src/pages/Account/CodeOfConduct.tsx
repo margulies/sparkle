@@ -67,13 +67,13 @@ const CodeOfConduct: React.FunctionComponent<PropsType> = ({ location }) => {
   });
 
   const proceed = () => {
-    history.push(
-      returnUrl
-        ? returnUrl.toString()
-        : venueId
+    const url =
+      user && venueId
         ? venueInsideUrl(venueId.toString())
-        : ""
-    );
+        : returnUrl
+        ? returnUrl.toString()
+        : venueId?.toString() ?? "";
+    history.push(url);
   };
 
   const onSubmit = async (data: CodeOfConductFormData) => {
