@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 global.XMLHttpRequest = require("xhr2");
 var firebase = require("firebase");
 var read = require("read");
