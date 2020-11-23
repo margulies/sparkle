@@ -4,6 +4,7 @@ import { useFirestoreConnect } from "react-redux-firebase";
 import { useSelector } from "hooks/useSelector";
 import { useVenueId } from "hooks/useVenueId";
 
+import { filterUnreadPrivateChats } from "utils/filter";
 import { chatUsersSelector, privateChatsSelector } from "utils/selectors";
 
 import VenueChat from "components/molecules/VenueChat";
@@ -29,6 +30,8 @@ const Sidebar = () => {
   const privateChats = useSelector(privateChatsSelector);
   const chatUsers = useSelector(chatUsersSelector);
   const isEnabled = chatUsers && privateChats;
+  const unreadMessages = filterUnreadPrivateChats(privateChats);
+  const numberOfUnreadMessages = unreadMessages.length;
 
   const selectPartyChatTab = useCallback(() => {
     isEnabled && setTab(TABS.PARTY_CHAT);
@@ -63,8 +66,12 @@ const Sidebar = () => {
           }`}
           onClick={selectPrivateChatTab}
         >
-          Messages
+          <div>Messages</div>
+          {!!numberOfUnreadMessages && (
+            <div className="unread-messages">{numberOfUnreadMessages}</div>
+          )}
         </div>
+
         <div
           className={`sidebar-tab sidebar-tab_schedule ${
             tab === TABS.LIVE_SCHEDULE && "active"
