@@ -27,7 +27,7 @@ import { useRecentVenueUsers } from "hooks/users";
 
 // Utils | Settings | Constants
 import { ConvertToEmbeddableUrl } from "utils/ConvertToEmbeddableUrl";
-import { IFRAME_ALLOW, REACTION_TIMEOUT } from "settings";
+import { IFRAME_ALLOW, IFRAME_ALLOW_MEETING, REACTION_TIMEOUT } from "settings";
 import { WithId } from "utils/id";
 import { currentVenueSelectorData } from "utils/selectors";
 
@@ -372,7 +372,11 @@ export const Audience: React.FunctionComponent = () => {
                 src={iframeUrl}
                 title="Video"
                 frameBorder="0"
-                allow={IFRAME_ALLOW}
+                allow={
+                  iframeUrl.includes("jit.si")
+                    ? IFRAME_ALLOW_MEETING
+                    : IFRAME_ALLOW
+                }
                 allowFullScreen
               />
             </div>
