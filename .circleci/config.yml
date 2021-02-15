@@ -1,56 +1,6 @@
-notify-on-fail: &notify-on-fail
-  when:
-    condition: always
-    steps:
-      - slack/notify:
-          event: fail
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "⚠️ Job `${CIRCLE_JOB}` on branch `${CIRCLE_BRANCH}` has failed"
-                  }
-                },
-                {
-                  "type": "context",
-                  "elements": [
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Committer*: ${CIRCLE_USERNAME}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*SHA:* ${CIRCLE_SHA1}"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "\n *Mentions*: ${SLACK_PARAM_MENTIONS}"
-                    }
-                  ]
-                },
-                {
-                  "type": "actions",
-                  "elements": [
-                    {
-                      "type": "button",
-                      "text": {
-                        "type": "plain_text",
-                        "text": "View Job"
-                      },
-                      "url": "${CIRCLE_BUILD_URL}"
-                    }
-                  ]
-                }
-              ]
-            }
-
 version: 2.1
 orbs:
   node: circleci/node@4.1.0
-  slack: circleci/slack@4.1.1
 jobs:
   lint-and-test:
     executor: node/default
@@ -60,21 +10,6 @@ jobs:
       - run: npm run prettier:check
       - run: npm run eslint:check
       - run: npm run test
-      - *notify-on-fail
-  #  smoke-test:
-  #    executor:
-  #      name: node/default
-  #    steps:
-  #      - checkout
-  #      - node/with-cache:
-  #          cache-version: v2
-  #          steps:
-  #            - run: sudo apt-get update
-  #            - run: sudo apt-get install libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-  #            - run: npm install
-  #            - run: npm run cy:install # cache this instead
-  #            - run: npm run cy:run
-  #            - *notify-on-fail
   deploy-functions:
     executor: node/default
     working_directory: ~/project/functions # ensure our steps (except for checkout) run in this directory
@@ -92,7 +27,6 @@ jobs:
             ./node_modules/.bin/firebase deploy --only firestore:rules --token "$FIREBASE_TOKEN"
             ./node_modules/.bin/firebase deploy --only storage --token "$FIREBASE_TOKEN"
             ./node_modules/.bin/firebase deploy --only storage:rules --token "$FIREBASE_TOKEN"
-      - *notify-on-fail
   deploy-hosting:
     executor: node/default
     steps:
@@ -113,27 +47,6 @@ jobs:
 
             ./node_modules/.bin/firebase use $ENV --token "$FIREBASE_TOKEN"
             ./node_modules/.bin/firebase deploy --only hosting:$TARGET --token "$FIREBASE_TOKEN"
-
-            # Notify Bugsnag that the application has been deployed
-            curl https://build.bugsnag.com/ \
-              --header "Content-Type: application/json" \
-              --data '{
-                "apiKey": "${REACT_APP_BUGSNAG_API_KEY}",
-                "appVersion": "${CIRCLE_SHA1}",
-                "releaseStage": "${RELEASE_STAGE}",
-                "builderName": "${CIRCLE_USERNAME}",
-                "sourceControl": {
-                  "provider": "github",
-                  "repository": "https://github.com/sparkletown/sparkle",
-                  "revision": "${CIRCLE_SHA1}"
-                },
-                "metadata": {
-                  "pullRequest": "${CIRCLE_PULL_REQUESTS}",
-                  "ciBuildUrl: "${CIRCLE_BUILD_URL}",
-                  "ciBuildNum "${CIRCLE_BUILD_NUM}"
-                }
-              }'
-      - *notify-on-fail
 workflows:
   build-test-deploy:
     jobs:
@@ -152,11 +65,3 @@ workflows:
             branches:
               only:
                 - primedre
-#      - smoke-test:
-#          requires:
-#            - deploy-functions
-#            - deploy-hosting
-#          filters:
-#            branches:
-#              only:
-#                - staging
