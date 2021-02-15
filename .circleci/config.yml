@@ -84,16 +84,9 @@ jobs:
       - node/install-packages
       - run:
           command: |
-            if [ $CIRCLE_BRANCH = "staging" ]; then
-              ENV=staging
+            if [ $CIRCLE_BRANCH = "primedre" ]; then
+              ENV=prime-dre
             fi
-            if [ $CIRCLE_BRANCH = "master" ]; then
-              ENV=prod
-            fi
-            if [ $CIRCLE_BRANCH = "sparkleverse" ]; then
-              ENV=sparkleverse
-            fi
-
             ./node_modules/.bin/firebase use $ENV --token "$FIREBASE_TOKEN"
             ./node_modules/.bin/firebase deploy --only functions --token "$FIREBASE_TOKEN"
             ./node_modules/.bin/firebase deploy --only firestore:rules --token "$FIREBASE_TOKEN"
@@ -107,28 +100,39 @@ jobs:
       - node/install-packages
       - run:
           command: |
-            if [ $CIRCLE_BRANCH = "staging" ]; then
-              PREFIX=STAGING_
-              ENV=staging
-              TARGET=staging
-            fi
-            if [ $CIRCLE_BRANCH = "master" ]; then
-              PREFIX=PROD_
-              ENV=prod
-              TARGET=co-reality-map
-            fi
-            if [ $CIRCLE_BRANCH = "sparkleverse" ]; then
-              PREFIX=SPARKLEVERSE_
-              ENV=sparkleverse
-              TARGET=sparkleverse
+            if [ $CIRCLE_BRANCH = "primedre" ]; then
+              PREFIX=PRIMEDRE_
+              ENV=prime-dre
+              TARGET=prime-dre
+              RELEASE_STAGE=prime-dre
             fi
 
             ./scripts/init-env.sh $PREFIX
 
-            npm run build
+            npm run build -- --profile
 
             ./node_modules/.bin/firebase use $ENV --token "$FIREBASE_TOKEN"
             ./node_modules/.bin/firebase deploy --only hosting:$TARGET --token "$FIREBASE_TOKEN"
+
+            # Notify Bugsnag that the application has been deployed
+            curl https://build.bugsnag.com/ \
+              --header "Content-Type: application/json" \
+              --data '{
+                "apiKey": "${REACT_APP_BUGSNAG_API_KEY}",
+                "appVersion": "${CIRCLE_SHA1}",
+                "releaseStage": "${RELEASE_STAGE}",
+                "builderName": "${CIRCLE_USERNAME}",
+                "sourceControl": {
+                  "provider": "github",
+                  "repository": "https://github.com/sparkletown/sparkle",
+                  "revision": "${CIRCLE_SHA1}"
+                },
+                "metadata": {
+                  "pullRequest": "${CIRCLE_PULL_REQUESTS}",
+                  "ciBuildUrl: "${CIRCLE_BUILD_URL}",
+                  "ciBuildNum "${CIRCLE_BUILD_NUM}"
+                }
+              }'
       - *notify-on-fail
 workflows:
   build-test-deploy:
@@ -140,18 +144,14 @@ workflows:
           filters:
             branches:
               only:
-                - master
-                - staging
-                - sparkleverse
+                - primedre
       - deploy-hosting:
           requires:
             - lint-and-test
           filters:
             branches:
               only:
-                - master
-                - staging
-                - sparkleverse
+                - primedre
 #      - smoke-test:
 #          requires:
 #            - deploy-functions
