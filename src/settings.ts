@@ -11,13 +11,13 @@ import {
 import { VenueTemplate } from "types/venues";
 import { FIVE_MINUTES_MS } from "utils/time";
 
-export const SPARKLE_HOMEPAGE_URL = "https://sparklespaces.com/";
+export const SPARKLE_HOMEPAGE_URL = "https://prime-dre.web.app/v/primedre";
 export const SPARKLE_TERMS_AND_CONDITIONS_URL =
   "https://sparklespaces.com/terms-of-use/";
 export const SPARKLE_PRIVACY_POLICY =
   "https://sparklespaces.com/privacy-policy/";
 
-export const SPARKLEVERSE_HOMEPAGE_URL = "https://sparklever.se/";
+export const SPARKLEVERSE_HOMEPAGE_URL = "https://prime-dre.web.app/v/primedre";
 export const SPARKLEVERSE_TERMS_AND_CONDITIONS_URL =
   "https://sparklever.se/terms-and-conditions";
 export const SPARKLEVERSE_PRIVACY_POLICY =
@@ -129,7 +129,7 @@ export const ACCEPTED_IMAGE_TYPES =
 export const VALID_URL_PROTOCOLS = ["http:", "https:"];
 
 export const IFRAME_ALLOW =
-  "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen";
+  "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen; camera; microphone; display-capture;";
 
 export const ENABLE_SUSPECTED_LOCATION = false;
 export const ENABLE_PLAYA_ADDRESS = false;
