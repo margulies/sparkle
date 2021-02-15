@@ -159,7 +159,12 @@ export const Audience: React.FunctionComponent = () => {
       .collection("venues")
       .doc(venueId as string)
       .onSnapshot((doc) =>
-        setIframeUrl(ConvertToEmbeddableUrl(doc.data()?.iframeUrl || "", true))
+        setIframeUrl(
+          ConvertToEmbeddableUrl(
+            doc.data()?.iframeUrl || "",
+            doc.data()?.iframeUrl.includes("jit.si") ? false : true
+          )
+        )
       );
   }, [venueId]);
 
