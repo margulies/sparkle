@@ -9,9 +9,9 @@ describe("package-lock.json", () => {
   /**
    * This test allows us to failfast when npm v7 is used, until we are ready for it
    */
-  test("has lockfileVersion 1", () => {
-    expect(packageLockJson.lockfileVersion).toBe(1);
-  });
+  // test("has lockfileVersion 1", () => {
+  //   expect(packageLockJson.lockfileVersion).toBe(1);
+  // });
 
   /**
    * Ensure that fontawesome deps requirements are kept in alignment to avoid weird breakages.
