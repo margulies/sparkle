@@ -14,6 +14,7 @@ import {
   DEFAULT_PARTY_NAME,
   DEFAULT_PROFILE_IMAGE,
   RANDOM_AVATARS,
+  SHOW_AVATAR_NAMETAGS,
 } from "settings";
 
 // Styles
@@ -21,6 +22,7 @@ import "./UserProfilePicture.scss";
 import * as S from "./UserProfilePicture.styles";
 import { useReactions } from "hooks/useReactions";
 import { useVenueId } from "hooks/useVenueId";
+import { useConnectCurrentVenueNG } from "hooks/useConnectCurrentVenueNG";
 
 const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
   isAudioEffectDisabled,
@@ -31,6 +33,7 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
   setSelectedUserProfile,
   reactionPosition,
   user,
+  showNametags,
 }) => {
   const muteReactions = useSelector((state) => state.room.mute);
 
@@ -64,6 +67,7 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
   }, [avatarUrl, user.anonMode, user.id, user.pictureUrl]);
 
   const venueId = useVenueId();
+  const { currentVenue } = useConnectCurrentVenueNG(venueId);
   const reactions = useReactions(venueId);
 
   const typedReaction = reactions ?? [];
@@ -101,8 +105,12 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
           className={avatarClassName}
           backgroundImage={pictureUrl}
           style={{ ...avatarStyle }}
-        />
-
+        >
+          {showNametags &&
+            (currentVenue?.showNametags ?? SHOW_AVATAR_NAMETAGS) && (
+              <div className="profile-name-avatar">{user.partyName}</div>
+            )}
+        </S.Avatar>
         {Reactions.map(
           (reaction, index) =>
             reactions.find(
@@ -152,12 +160,15 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
     reactions,
     muteReactions,
     isAudioEffectDisabled,
+    showNametags,
+    currentVenue,
   ]);
 };
 
 UserProfilePicture.defaultProps = {
   avatarClassName: "profile-icon",
   miniAvatars: false,
+  showNametags: true,
 };
 
 export default UserProfilePicture;

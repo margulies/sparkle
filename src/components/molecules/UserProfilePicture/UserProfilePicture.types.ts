@@ -1,5 +1,6 @@
 import { User } from "types/User";
 import { WithId } from "utils/id";
+import { AnyVenue } from "types/venues";
 
 export interface UserProfilePictureProp {
   isAudioEffectDisabled?: boolean;
@@ -10,4 +11,6 @@ export interface UserProfilePictureProp {
   setSelectedUserProfile: (user: WithId<User>) => void;
   user: WithId<User>;
   reactionPosition?: "right" | "left" | undefined;
+  showNametags?: boolean;
+  currentVenue?: WithId<AnyVenue>;
 }
