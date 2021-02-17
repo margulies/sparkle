@@ -1,7 +1,6 @@
 /* disable-esliint */
 import React, { useState, useEffect } from "react";
 import { Props, JitsiMeetAPIOptions } from "./types";
-//import * as Default from "./defaults";
 import { importJitsiApi } from "./utils";
 import { useFirebase } from "react-redux-firebase";
 import { useUser } from "hooks/useUser";
@@ -49,6 +48,7 @@ const Jitsi: React.FC<Props> = (props: Props) => {
   } = { ...props }; //...Default.Props, ...props };
 
   //const [loading, setLoading] = useState(true);
+  const [loaded, setLoaded] = useState(false);
   //const ref = useRef<HTMLDivElement | null>(null);
 
   //const Loader = loadingComponent || Default.Loader;
@@ -107,6 +107,7 @@ const Jitsi: React.FC<Props> = (props: Props) => {
 
     // api.addEventListener("videoConferenceJoined", () => {
     //   setLoading(false);
+    //   setLoaded(true);
 
     //   api.executeCommand("displayName", displayName);
 
@@ -137,6 +138,7 @@ const Jitsi: React.FC<Props> = (props: Props) => {
   useEffect(() => {
     (async () => {
       if (!user) return;
+      if (loaded) return;
       // @ts-ignore
       const getTokn = firebase.functions().httpsCallable("jitsi-getJitsiToken");
       const response = await getTokn({
@@ -154,6 +156,8 @@ const Jitsi: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     if (!token) return;
+    if (loaded) return;
+    setLoaded(true);
     importJitsiApi().then((jitsiApi) => {
       startConference(jitsiApi, token);
     });
