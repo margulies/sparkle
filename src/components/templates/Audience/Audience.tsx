@@ -2,9 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import firebase, { UserInfo } from "firebase/app";
-
 import { makeUpdateUserGridLocation } from "api/profile";
 
 // Components
@@ -17,6 +15,8 @@ import {
 import ChatDrawer from "components/organisms/ChatDrawer";
 import UserProfileModal from "components/organisms/UserProfileModal";
 import UserProfilePicture from "components/molecules/UserProfilePicture";
+import Jitsi from "components/molecules/Jitsi";
+import { JAAS_TENANT } from "secrets";
 
 // Hooks
 import { useDispatch } from "hooks/useDispatch";
@@ -27,7 +27,7 @@ import { useRecentVenueUsers } from "hooks/users";
 
 // Utils | Settings | Constants
 import { ConvertToEmbeddableUrl } from "utils/ConvertToEmbeddableUrl";
-import { IFRAME_ALLOW, IFRAME_ALLOW_MEETING, REACTION_TIMEOUT } from "settings";
+import { IFRAME_ALLOW, REACTION_TIMEOUT } from "settings";
 import { WithId } from "utils/id";
 import { currentVenueSelectorData } from "utils/selectors";
 
@@ -329,7 +329,7 @@ export const Audience: React.FunctionComponent = () => {
             />
           </div>
           <button className="leave-seat-button" onClick={leaveSeat}>
-            Leave Seat
+            {iframeUrl.includes("jitsi") ? "Leave" : "Leave Seat"}
           </button>
         </div>
         <div className="shout-container">
@@ -355,10 +355,28 @@ export const Audience: React.FunctionComponent = () => {
 
     const renderInstructions = () => (
       <div className="instructions">
-        Welcome! Click on an empty seat to claim it!
+        {iframeUrl.includes("jitsi")
+          ? ""
+          : "Welcome! Click on an empty seat to claim it!"}
       </div>
     );
 
+    const joinMeetingInstructions = () => (
+      <div
+        className="instructions2"
+        style={{
+          display: "flex",
+          fontSize: "1.3em",
+          justifyContent: "center",
+          position: "relative",
+          top: "50%",
+        }}
+      >
+        Welcome! Click on an empty seat to join the presentation
+      </div>
+    );
+
+    const tenant = String(JAAS_TENANT);
     return (
       <>
         <div
@@ -367,18 +385,24 @@ export const Audience: React.FunctionComponent = () => {
         >
           <div className="video-container">
             <div className="video">
-              <iframe
-                className={videoFrameClasses}
-                src={iframeUrl}
-                title="Video"
-                frameBorder="0"
-                allow={
-                  iframeUrl.includes("jit.si")
-                    ? IFRAME_ALLOW_MEETING
-                    : IFRAME_ALLOW
-                }
-                allowFullScreen
-              />
+              {iframeUrl.includes("jitsi") ? (
+                <div className={videoFrameClasses}>
+                  {userSeated ? (
+                    <Jitsi roomName={tenant.concat("/", iframeUrl)} />
+                  ) : (
+                    joinMeetingInstructions()
+                  )}
+                </div>
+              ) : (
+                <iframe
+                  className={videoFrameClasses}
+                  src={iframeUrl}
+                  title="Video"
+                  frameBorder="0"
+                  allow={IFRAME_ALLOW}
+                  allowFullScreen
+                />
+              )}
             </div>
             {venue.showReactions && (
               <div

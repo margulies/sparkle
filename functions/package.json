@@ -13,6 +13,7 @@
     "firebase": "^8.2.4",
     "firebase-admin": "^9.4.2",
     "firebase-functions": "^3.13.1",
+    "jsonwebtoken": "^8.5.1",
     "npm-force-resolutions": "0.0.3",
     "prettier": "^2.2.1",
     "stripe": "^8.71.0",

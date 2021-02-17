@@ -39,6 +39,12 @@ $light: #ffffff;
         box-shadow: 2px 2px 20px $light;
       }
 
+      .meet {
+        height: 100%;
+        width: 100%;
+        position: fixed;
+      }
+
       .aspect-16-9 {
         max-width: 88.5%;
         margin-left: 6.5%;
@@ -55,7 +61,7 @@ $light: #ffffff;
       height: 50px;
       border-bottom-left-radius: 20px;
       border-bottom-right-radius: 20px;
-      box-shadow: 2px 2px 20px $light;
+      box-shadow: 0px 5px 20px -10px $light;
       background-color: #1a1d24;
       flex-direction: column;
       justify-content: space-around;

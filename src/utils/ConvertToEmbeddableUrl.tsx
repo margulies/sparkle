@@ -2,6 +2,7 @@ export const ConvertToEmbeddableUrl = (
   url: string | undefined,
   autoplay: boolean = true
 ) => {
+  if (url?.includes("jitsi")) return url;
   if (url?.includes("youtube")) {
     url = url?.replace("watch?v=", "embed/");
   } else if (url?.includes("vimeo") && !url?.includes("player")) {

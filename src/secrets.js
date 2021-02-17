@@ -9,6 +9,8 @@ export const BUGSNAG_API_KEY = process.env.REACT_APP_BUGSNAG_API_KEY;
 export const LOGROCKET_APP_ID = process.env.REACT_APP_LOGROCKET_APP_ID;
 export const MIXPANEL_PROJECT_TOKEN =
   process.env.REACT_APP_MIXPANEL_PROJECT_TOKEN;
+export const JAAS_API_KEY = process.env.REACT_APP_JAAS_API_KEY;
+export const JAAS_TENANT = process.env.REACT_APP_JAAS_TENANT;
 
 export const WS_RELAY_URL = process.env.REACT_APP_WS_RELAY_URL;
 export const IS_BURN = process.env.REACT_APP_IS_BURN;
