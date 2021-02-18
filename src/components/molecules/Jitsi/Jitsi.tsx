@@ -18,8 +18,30 @@ const Jitsi: React.FC<Props> = (props: Props) => {
     roomName,
     // password,
     // displayName,
-    // config,
+    config = {
+      //etherpad_base: true,
+      startWithAudioMuted: true,
+      startWithVideoMuted: true,
+      disableThirdPartyRequests: false,
+      prejoinPageEnabled: false,
+      enableUserRolesBasedOnToken: true,
+      enableFeaturesBasedOnToken: true,
+      enableWelcomePage: false,
+      transcribingEnabled: true,
+      deploymentUrls: {
+        userDocumentationURL: "https://primedre.space/v/primedre",
+      },
+    },
     interfaceConfig = {
+      LOCAL_THUMBNAIL_RATIO: 1.618 / 1,
+      INITIAL_TOOLBAR_TIMEOUT: 5,
+      TOOLBAR_TIMEOUT: 5,
+      //TOOLBAR_ALWAYS_VISIBLE: false,
+      DISPLAY_WELCOME_PAGE_CONTENT: false,
+      VIDEO_LAYOUT_FIT: "both",
+      CONNECTION_INDICATOR_DISABLED: true,
+      VIDEO_QUALITY_LABEL_DISABLED: true,
+      FILM_STRIP_MAX_HEIGHT: 100,
       TOOLBAR_BUTTONS: [
         "microphone",
         "camera",
@@ -30,19 +52,21 @@ const Jitsi: React.FC<Props> = (props: Props) => {
         "profile",
         "info",
         "recording",
-        "etherpad",
+        //"etherpad",
         "settings",
         "raisehand",
-        "videoquality",
+        //"videoquality",
         "filmstrip",
         "shortcuts",
         "tileview",
         "help",
         "mute-everyone",
+        "info",
       ],
+      SETTINGS_SECTIONS: ["moderator", "profile", "calendar", "devices"],
     },
     // noSSL,
-    // //jwt, // uncomment
+    // jwt
     // devices,
     // userInfo,
   } = { ...props }; //...Default.Props, ...props };
@@ -60,10 +84,11 @@ const Jitsi: React.FC<Props> = (props: Props) => {
 
   // eslint-disable-next-line
   const startConference = (JitsiMeetExternalAPI: any, token: any): void => {
+    // try {
     const options: JitsiMeetAPIOptions = {
       roomName, //:
       parentNode: document.querySelector("#meet"),
-      // configOverwrite: config,
+      configOverwrite: config,
       interfaceConfigOverwrite: interfaceConfig,
       // noSSL,
       jwt: token,
@@ -72,45 +97,11 @@ const Jitsi: React.FC<Props> = (props: Props) => {
       // userInfo,
     };
 
-    // try {
-    //console.log("interfaceConfig", interfaceConfig);
-
-    // const token = GenerateToken({
-    //   id: "4vbgwhgwt",
-    //   name: "John",
-    //   tenant: "vpaas-magic-cookie-5e484a36ea8f4b69861a97388a803c6e",
-    //   kid: "vpaas-magic-cookie-5e484a36ea8f4b69861a97388a803c6e/f47a85",
-    // });
-    //const tokenStr: string = token?.toString();
-    // console.log(token);
-
-    // const options: JitsiMeetAPIOptions = {
-    //   roomName,
-    //   parentNode: ref.current,
-    //   configOverwrite: config,
-    //   interfaceConfigOverwrite: interfaceConfig,
-    //   noSSL,
-    //   jwt: token?.toString(),
-    //   onLoad: onIframeLoad,
-    //   devices,
-    //   userInfo,
-    // };
-
     const api = new JitsiMeetExternalAPI(domain, options);
-    //userInfo: { displayName: "John" },
-    // });
-    // const api = new JitsiMeetExternalAPI(domain, options);
-
-    if (!api) throw new Error("Failed to create JitsiMeetExternalAPI istance");
-
     if (onAPILoad) onAPILoad(api);
 
     // api.addEventListener("videoConferenceJoined", () => {
-    //   setLoading(false);
-    //   setLoaded(true);
-
     //   api.executeCommand("displayName", displayName);
-
     //   if (domain === Default.Props.domain && password)
     //     api.executeCommand("password", password);
     // });
@@ -146,8 +137,12 @@ const Jitsi: React.FC<Props> = (props: Props) => {
         name: profile?.partyName || "Participant",
         email: user.email,
         avatar: "https://primedre.space" + profile?.pictureUrl || "",
-        tenant: JAAS_TENANT, //"vpaas-magic-cookie-5e484a36ea8f4b69861a97388a803c6e",
-        apikey: JAAS_API_KEY, //"vpaas-magic-cookie-5e484a36ea8f4b69861a97388a803c6e/f47a85",
+        tenant: JAAS_TENANT,
+        apikey: JAAS_API_KEY,
+        moderator: "true", // update with roles
+        livestreaming: "true",
+        recording: "true",
+        transcription: "true",
       });
       setToken(response.data.token);
     })();

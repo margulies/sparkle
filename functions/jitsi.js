@@ -3,7 +3,21 @@ const JAAS_CONFIG = functions.config().jaas;
 
 var jsonwebtoken = require("jsonwebtoken");
 
-const generate = (privateKey, { id, name, email, avatar, appId, kid }) => {
+const generate = (
+  privateKey,
+  {
+    id,
+    name,
+    email,
+    avatar,
+    appId,
+    kid,
+    moderator,
+    livestreaming,
+    recording,
+    transcription,
+  }
+) => {
   const now = new Date();
   const jwt = jsonwebtoken.sign(
     {
@@ -12,14 +26,14 @@ const generate = (privateKey, { id, name, email, avatar, appId, kid }) => {
         user: {
           id,
           name,
-          avatar,
+          avatar: avatar,
           email: email,
-          moderator: "true",
+          moderator: moderator,
         },
         features: {
-          livestreaming: "true",
-          recording: "true",
-          transcription: "true",
+          livestreaming: livestreaming,
+          recording: recording,
+          transcription: transcription,
           "outbound-call": "true",
         },
       },
@@ -43,6 +57,10 @@ exports.getJitsiToken = functions.https.onCall((data) => {
     avatar: data.avatar,
     appId: data.tenant,
     kid: data.apikey,
+    moderator: data.moderator,
+    livestreaming: data.livestreaming,
+    recording: data.recording,
+    transcription: data.transcription,
   });
   return {
     token: token.toString(),
