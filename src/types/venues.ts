@@ -71,6 +71,7 @@ export interface Venue_v2_AdvancedConfig {
   showBadges?: boolean;
   showGrid?: boolean;
   showNametags?: boolean;
+  showFireworks?: boolean;
   showRadio?: boolean;
   showRangers?: boolean;
   showZendesk?: boolean;
@@ -145,6 +146,7 @@ export interface Venue {
   showRadio?: boolean;
   showBadges?: boolean;
   showNametags?: boolean;
+  showFireworks?: boolean;
   showZendesk?: boolean;
 }
 

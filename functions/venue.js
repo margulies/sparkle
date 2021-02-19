@@ -101,6 +101,7 @@ const createVenueData = (data, context) => {
     showRadio: data.showRadio || false,
     radioStations: data.radioStations ? [data.radioStations] : [],
     showNametags: data.showNametags || false,
+    showFireworks: data.showFireworks || false,
   };
 
   if (data.mapBackgroundImageUrl) {
@@ -553,6 +554,10 @@ exports.updateVenue = functions.https.onCall(async (data, context) => {
 
   if (typeof data.showNametags === "boolean") {
     updated.showNametags = data.showNametags;
+  }
+
+  if (typeof data.showFireworks === "boolean") {
+    updated.showFireworks = data.showFireworks;
   }
 
   updated.requiresDateOfBirth = data.requiresDateOfBirth || false;

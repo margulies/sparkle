@@ -788,6 +788,18 @@ const DetailsFormLeft: React.FC<DetailsFormLeftProps> = ({
     </div>
   );
 
+  const renderShowFireworksToggle = () => (
+    <div className="toggle-room">
+      <h4 className="italic input-header">
+        Display fireworks when hovering on user avatars
+      </h4>
+      <label className="switch">
+        <input type="checkbox" name="showFireworks" ref={register} />
+        <span className="slider round" />
+      </label>
+    </div>
+  );
+
   const renderRadioToggle = () => (
     <div className="toggle-room">
       <h4 className="italic input-header">Enable venue radio</h4>
@@ -880,6 +892,7 @@ const DetailsFormLeft: React.FC<DetailsFormLeftProps> = ({
           renderShowGridToggle()}
         {renderShowBadgesToggle()}
         {renderShowNametagsToggle()}
+        {renderShowFireworksToggle()}
         {renderShowZendeskToggle()}
         {templateID &&
           HAS_REACTIONS_TEMPLATES.includes(templateID) &&

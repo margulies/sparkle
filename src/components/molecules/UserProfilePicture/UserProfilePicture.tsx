@@ -15,6 +15,7 @@ import {
   DEFAULT_PROFILE_IMAGE,
   RANDOM_AVATARS,
   DEFAULT_SHOW_AVATAR_NAMETAG,
+  DEFAULT_SHOW_AVATAR_FIREWORKS,
 } from "settings";
 
 // Styles
@@ -81,6 +82,9 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
   const shouldShowNametags =
     currentVenue?.showNametags ?? DEFAULT_SHOW_AVATAR_NAMETAG;
 
+  const shouldShowFireworks =
+    currentVenue?.showFireworks ?? DEFAULT_SHOW_AVATAR_FIREWORKS;
+
   const imageErrorHandler = useCallback(
     (
       event: HTMLImageElement | React.SyntheticEvent<HTMLImageElement, Event>
@@ -111,16 +115,16 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
           backgroundImage={pictureUrl}
           style={{ ...avatarStyle }}
         >
-          {shouldShowNametags && (
-            <>
-              <div className="only-hover">
-                <div className="pyro">
-                  <div className="before"></div>
-                  <div className="after"></div>
-                </div>
+          {shouldShowFireworks && (
+            <div className="only-hover">
+              <div className="pyro">
+                <div className="before"></div>
+                <div className="after"></div>
               </div>
-              <div className="profile-name-avatar">{user.partyName}</div>
-            </>
+            </div>
+          )}
+          {shouldShowNametags && (
+            <div className="profile-name-avatar">{user.partyName}</div>
           )}
         </S.Avatar>
         {Reactions.map(
@@ -173,6 +177,7 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
     muteReactions,
     isAudioEffectDisabled,
     shouldShowNametags,
+    shouldShowFireworks,
   ]);
 };
 
