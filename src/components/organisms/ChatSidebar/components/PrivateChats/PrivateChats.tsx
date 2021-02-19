@@ -9,6 +9,9 @@ import { SetSelectedProfile } from "types/chat";
 import { usePrivateChatPreviews } from "hooks/privateChats";
 import { useChatSidebarControls } from "hooks/chatSidebar";
 import { useRecentWorldUsers } from "hooks/users";
+import { useUser } from "hooks/useUser";
+import { useVenueId } from "hooks/useVenueId";
+import { useConnectCurrentVenueNG } from "hooks/useConnectCurrentVenueNG";
 
 import "./PrivateChats.scss";
 
@@ -31,7 +34,14 @@ export const PrivateChats: React.FC<PrivateChatsProps> = ({
   const { selectRecipientChat } = useChatSidebarControls();
   const { recentWorldUsers } = useRecentWorldUsers();
 
-  const numberOfRecentWorldUsers = recentWorldUsers.length;
+  const { user } = useUser();
+  const myUserId = user?.uid;
+
+  const venueId = useVenueId();
+  const { currentVenue } = useConnectCurrentVenueNG(venueId);
+  const chatTitle = currentVenue?.chatTitle ?? "Venue";
+
+  const numberOfRecentWorldUsers = recentWorldUsers.length - 1;
 
   const renderedPrivateChatPreviews = useMemo(
     () =>
@@ -50,14 +60,18 @@ export const PrivateChats: React.FC<PrivateChatsProps> = ({
 
   const renderedOnlineUsers = useMemo(
     () =>
-      recentWorldUsers.map((user) => (
-        <OnlineUser
-          key={user.id}
-          user={user}
-          onClick={() => selectRecipientChat(user.id)}
-        />
-      )),
-    [recentWorldUsers, selectRecipientChat]
+      recentWorldUsers.map((user) => {
+        // eslint-disable-next-line
+        if (user.id === myUserId) return;
+        return (
+          <OnlineUser
+            key={user.id}
+            user={user}
+            onClick={() => selectRecipientChat(user.id)}
+          />
+        );
+      }),
+    [recentWorldUsers, selectRecipientChat, myUserId]
   );
 
   const renderedSearchResults = useMemo(
@@ -116,7 +130,7 @@ export const PrivateChats: React.FC<PrivateChatsProps> = ({
           )}
 
           <p className="private-chats__title-text">
-            {numberOfRecentWorldUsers} connected people
+            {numberOfRecentWorldUsers} others are here at the {chatTitle}
           </p>
 
           {renderedOnlineUsers}
