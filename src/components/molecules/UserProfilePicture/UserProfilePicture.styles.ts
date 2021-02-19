@@ -93,7 +93,7 @@ export const Container = styled.div`
     transform: translate(-50%, 0);
     min-width: 70%;
     transition: transform 400ms, padding 400ms, opacity 600ms,
-      background-color 600ms, display 400ms;
+      background-color 600ms;
   }
   .only-hover {
     display: none;
