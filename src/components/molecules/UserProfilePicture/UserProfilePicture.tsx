@@ -19,6 +19,7 @@ import {
 
 // Styles
 import "./UserProfilePicture.scss";
+import "./fireworks.scss";
 import * as S from "./UserProfilePicture.styles";
 import { useReactions } from "hooks/useReactions";
 import { useVenueId } from "hooks/useVenueId";
@@ -112,7 +113,15 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
           style={{ ...avatarStyle }}
         >
           {shouldShowNametags && (
-            <div className="profile-name-avatar">{user.partyName}</div>
+            <>
+              <div className="only-hover">
+                <div className="pyro">
+                  <div className="before"></div>
+                  <div className="after"></div>
+                </div>
+              </div>
+              <div className="profile-name-avatar">{user.partyName}</div>
+            </>
           )}
         </S.Avatar>
         {Reactions.map(
