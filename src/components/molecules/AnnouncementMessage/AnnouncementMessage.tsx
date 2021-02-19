@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
-import { getLinkFromText } from "utils/getLinkFromText";
+import Parser from "html-react-parser";
 
 import { useChatSidebarControls } from "hooks/chatSidebar";
 
@@ -37,7 +37,7 @@ export const AnnouncementMessage: React.FC<AnnouncementMessageProps> = ({
         centered: !isExpanded,
       })}
     >
-      {getLinkFromText(message)}
+      {Parser(message)}
       <span className="close-button" onClick={hideAnnouncement}>
         <FontAwesomeIcon icon={faTimesCircle} />
       </span>
