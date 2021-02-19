@@ -11,6 +11,8 @@ import {
   useOnlineUsersToDisplay,
 } from "hooks/privateChats";
 import { useChatSidebarControls } from "hooks/chatSidebar";
+import { useVenueId } from "hooks/useVenueId";
+import { useConnectCurrentVenueNG } from "hooks/useConnectCurrentVenueNG";
 
 import "./PrivateChats.scss";
 
@@ -32,6 +34,10 @@ export const PrivateChats: React.FC<PrivateChatsProps> = ({
   const { privateChatPreviews } = usePrivateChatPreviews();
   const onlineUsers = useOnlineUsersToDisplay();
   const { selectRecipientChat } = useChatSidebarControls();
+
+  const venueId = useVenueId();
+  const { currentVenue } = useConnectCurrentVenueNG(venueId);
+  const chatTitle = currentVenue?.chatTitle ?? "Venue";
 
   const numberOfOnline = onlineUsers.length;
 
@@ -121,7 +127,7 @@ export const PrivateChats: React.FC<PrivateChatsProps> = ({
           )}
 
           <p className="private-chats__title-text">
-            {numberOfOnline} connected people
+            {numberOfOnline} others are here at the {chatTitle}
           </p>
 
           {renderedOnlineUsers}
