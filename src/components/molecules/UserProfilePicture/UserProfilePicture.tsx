@@ -25,6 +25,7 @@ import { useReactions } from "hooks/useReactions";
 import { useVenueId } from "hooks/useVenueId";
 import { useConnectCurrentVenueNG } from "hooks/useConnectCurrentVenueNG";
 
+// @debt This component should be divided into a few with simpler logic. Also, remove `styled components`
 const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
   isAudioEffectDisabled,
   miniAvatars,
@@ -34,7 +35,6 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
   setSelectedUserProfile,
   reactionPosition,
   user,
-  showNametagComponent = true,
 }) => {
   const muteReactions = useSelector((state) => state.room.mute);
 
@@ -79,8 +79,7 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
   ) as MessageToTheBandReaction | undefined;
 
   const shouldShowNametags =
-    showNametagComponent &&
-    (currentVenue?.showNametags ?? DEFAULT_SHOW_AVATAR_NAMETAG);
+    currentVenue?.showNametags ?? DEFAULT_SHOW_AVATAR_NAMETAG;
 
   const imageErrorHandler = useCallback(
     (
