@@ -71,6 +71,9 @@ $box-shadow2: ();
   -ms-transform: $settings;
 }
 
+.pyro {
+  z-index: 2;
+}
 .pyro > .before,
 .pyro > .after {
   position: absolute;
