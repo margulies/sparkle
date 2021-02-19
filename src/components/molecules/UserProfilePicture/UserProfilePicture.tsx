@@ -14,11 +14,13 @@ import {
   DEFAULT_PARTY_NAME,
   DEFAULT_PROFILE_IMAGE,
   RANDOM_AVATARS,
-  SHOW_AVATAR_NAMETAGS,
+  DEFAULT_SHOW_AVATAR_NAMETAG,
+  DEFAULT_SHOW_AVATAR_FIREWORKS,
 } from "settings";
 
 // Styles
 import "./UserProfilePicture.scss";
+import "./fireworks.scss";
 import * as S from "./UserProfilePicture.styles";
 import { useReactions } from "hooks/useReactions";
 import { useVenueId } from "hooks/useVenueId";
@@ -34,7 +36,6 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
   setSelectedUserProfile,
   reactionPosition,
   user,
-  showNametags,
 }) => {
   const muteReactions = useSelector((state) => state.room.mute);
 
@@ -77,6 +78,12 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
     (r) => r.reaction === "messageToTheBand" && r.created_by === user.id
   ) as MessageToTheBandReaction | undefined;
 
+  const shouldShowNametags =
+    currentVenue?.showNametags ?? DEFAULT_SHOW_AVATAR_NAMETAG;
+
+  const shouldShowFireworks =
+    currentVenue?.showFireworks ?? DEFAULT_SHOW_AVATAR_FIREWORKS;
+
   const imageErrorHandler = useCallback(
     (
       event: HTMLImageElement | React.SyntheticEvent<HTMLImageElement, Event>
@@ -107,10 +114,17 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
           backgroundImage={pictureUrl}
           style={{ ...avatarStyle }}
         >
-          {showNametags &&
-            (currentVenue?.showNametags ?? SHOW_AVATAR_NAMETAGS) && (
-              <div className="profile-name-avatar">{user.partyName}</div>
-            )}
+          {shouldShowFireworks && (
+            <div className="only-hover">
+              <div className="pyro">
+                <div className="before"></div>
+                <div className="after"></div>
+              </div>
+            </div>
+          )}
+          {shouldShowNametags && (
+            <div className="profile-name-avatar">{user.partyName}</div>
+          )}
         </S.Avatar>
         {Reactions.map(
           (reaction, index) =>
@@ -161,15 +175,14 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
     reactions,
     muteReactions,
     isAudioEffectDisabled,
-    showNametags,
-    currentVenue,
+    shouldShowNametags,
+    shouldShowFireworks,
   ]);
 };
 
 UserProfilePicture.defaultProps = {
   avatarClassName: "profile-icon",
   miniAvatars: false,
-  showNametags: true,
 };
 
 export default UserProfilePicture;
