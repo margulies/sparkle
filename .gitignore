@@ -46,4 +46,4 @@ reporting/cookies.json
 
 #IDEs
 .idea/
-.code-workspace
+.code-workspace*
