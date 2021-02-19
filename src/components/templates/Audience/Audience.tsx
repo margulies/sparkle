@@ -12,7 +12,6 @@ import {
   TextReactionType,
 } from "utils/reactions";
 
-import ChatDrawer from "components/organisms/ChatDrawer";
 import UserProfileModal from "components/organisms/UserProfileModal";
 import UserProfilePicture from "components/molecules/UserProfilePicture";
 import Jitsi from "components/molecules/Jitsi";
@@ -469,14 +468,6 @@ export const Audience: React.FunctionComponent = () => {
                 );
               }
             )}
-          </div>
-          <div className="chat-container">
-            <ChatDrawer
-              title={`${venue.name ?? "Auditorium"} Q&A`}
-              roomName={venue.name}
-              chatInputPlaceholder="Ask a question"
-              defaultShow={true}
-            />
           </div>
           <UserProfileModal
             show={selectedUserProfile !== undefined}

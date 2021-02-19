@@ -40,6 +40,18 @@ jobs:
               TARGET=prime-dre
               RELEASE_STAGE=prime-dre
             fi
+            if [ $CIRCLE_BRANCH = "env/kotr" ]; then
+              PREFIX=KOTR_
+              ENV=sparkle-kotr
+              TARGET=sparkle-kotr
+              RELEASE_STAGE=kotr
+            fi
+            if [ $CIRCLE_BRANCH = "env/memrise" ]; then
+              PREFIX=MEMRISE_
+              ENV=sparkle-memrise
+              TARGET=sparkle-memrise
+              RELEASE_STAGE=memrise
+            fi
 
             ./scripts/init-env.sh $PREFIX
 
