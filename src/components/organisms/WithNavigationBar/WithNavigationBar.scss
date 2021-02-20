@@ -3,6 +3,7 @@
 .navbar-margin {
   padding-top: $navbar-height;
   padding-bottom: $footer-height;
+  overflow: hidden;
 }
 .navbar-margin.fullscreen {
   display: flex;
