@@ -22,6 +22,9 @@ $header-height: 45px;
 
   &__header {
     height: $header-height;
+    h3 {
+      padding: 10px;
+    }
   }
 
   &__controller {

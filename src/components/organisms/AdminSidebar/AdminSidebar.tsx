@@ -50,9 +50,9 @@ export const AdminSidebar: React.FC = () => {
               </>
             )}
           </div>
+          <h3>Admin Panel</h3>
         </div>
         <div className="admin-sidebar__contents">
-          <h3>Admin Panel</h3>
           <BannerAdmin venueId={venueId} venue={venue} />
           {isVideoVenue && <AdminVideo venueId={venueId} venue={venue} />}
         </div>
