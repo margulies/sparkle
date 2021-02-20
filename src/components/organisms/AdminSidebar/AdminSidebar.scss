@@ -1,0 +1,72 @@
+@import "scss/constants";
+
+$header-height: 45px;
+
+.admin-sidebar {
+  transform: translateX(100%);
+  transition: transform 0.2s;
+  position: fixed;
+  display: flex;
+  flex-flow: column;
+  top: 111px;
+  right: 0;
+  width: 360px;
+  height: calc(100vh - 96px);
+  background: $saturated-black-gradient;
+  z-index: z(sidebar);
+
+  &--expanded {
+    transform: translateX(0);
+    transition: transform 0.3s;
+  }
+
+  &__header {
+    height: $header-height;
+  }
+
+  &__controller {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5px; //13px;
+    height: 45px;
+    background-color: $intermediate-grey;
+    border-radius: 7px 0 0 7px; //16px 0 0 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: 0;
+    transform: translateX(-100%);
+
+    &:hover {
+      background-color: $lighter-intermediate-grey;
+    }
+
+    &__second-icon {
+      margin-left: 5px;
+    }
+  }
+
+  &__contents {
+    overflow-y: scroll;
+    margin: 0px 10px 0px 10px;
+    .container {
+      padding-right: 0px;
+      padding-left: 0px;
+      .row {
+        margin: 0px;
+        .col {
+          padding-right: 0px;
+          padding-left: 0px;
+        }
+      }
+    }
+    .admin-video-container {
+      margin-top: 20px;
+      padding: 0px;
+    }
+  }
+}

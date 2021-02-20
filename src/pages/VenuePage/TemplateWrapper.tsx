@@ -8,6 +8,7 @@ import { ArtPiece } from "components/templates/ArtPiece";
 import { ConversationSpace } from "components/templates/ConversationSpace";
 import { PlayaRouter } from "components/templates/Playa/Router";
 import { ChatSidebar } from "components/organisms/ChatSidebar";
+import { AdminSidebar } from "components/organisms/AdminSidebar";
 
 import { FireBarrel } from "components/templates/FireBarrel";
 import { Audience } from "components/templates/Audience/Audience";
@@ -16,12 +17,15 @@ import { PartyMap } from "components/templates/PartyMap";
 import { Jazzbar } from "components/templates/Jazzbar";
 import { AnnouncementMessage } from "components/molecules/AnnouncementMessage";
 
+import { useIsUserVenueOwner } from "hooks/useIsUserVenueOwner";
+
 type TemplateWrapperProps = {
   venue: Venue;
 };
 
 const TemplateWrapper: React.FC<TemplateWrapperProps> = ({ venue }) => {
   const history = useHistory();
+  const isVenueOwner = useIsUserVenueOwner();
 
   let template;
   let fullscreen = false;
@@ -93,6 +97,7 @@ const TemplateWrapper: React.FC<TemplateWrapperProps> = ({ venue }) => {
       <AnnouncementMessage message={venue?.bannerMessage} />
       {template}
       <ChatSidebar />
+      {isVenueOwner && <AdminSidebar />}
     </WithNavigationBar>
   );
 };
