@@ -54,7 +54,7 @@ const Jitsi: React.FC<Props> = (props: Props) => {
         "recording",
         //"etherpad",
         "settings",
-        "raisehand",
+        //"raisehand",
         //"videoquality",
         "filmstrip",
         "shortcuts",
