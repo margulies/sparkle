@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { faVolumeMute, faVolumeUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faVolumeMute,
+  faVolumeUp,
+  faHandPaper,
+  faHandSparkles,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import firebase, { UserInfo } from "firebase/app";
 import { makeUpdateUserGridLocation } from "api/profile";
@@ -252,19 +257,31 @@ export const Audience: React.FunctionComponent = () => {
     [columnsForSizedAuditorium, rowsForSizedAuditorium]
   );
 
+  const [handUp, setHandUp] = useState(false);
+
   // @debt this return useMemo antipattern should be rewritten
   return useMemo(() => {
-    const takeSeat = (row: number | null, column: number | null) => {
+    const takeSeat = (
+      row: number | null,
+      column: number | null,
+      handUp: boolean,
+      handOpt?: boolean | false
+    ) => {
       if (!venueId || !userUid) return;
 
       makeUpdateUserGridLocation({
         venueId,
         userUid,
-      })(row, column);
+      })(row, column, handUp, handOpt);
+    };
+    const leaveSeat = () => {
+      setHandUp(false);
+      takeSeat(null, null, handUp);
     };
 
-    const leaveSeat = () => {
-      takeSeat(null, null);
+    const toggleHand = () => {
+      takeSeat(null, null, !handUp, true); // hack to not wait for setState to update
+      setHandUp((state) => !state);
     };
 
     const onSubmit = async (data: ChatOutDataType) => {
@@ -325,6 +342,13 @@ export const Audience: React.FunctionComponent = () => {
             <FontAwesomeIcon
               className="reaction"
               icon={isAudioEffectDisabled ? faVolumeMute : faVolumeUp}
+            />
+          </div>
+          <div className="raise-hand" onClick={toggleHand}>
+            <FontAwesomeIcon
+              className="hand"
+              style={handUp ? { color: "red" } : { color: "white" }}
+              icon={handUp ? faHandSparkles : faHandPaper}
             />
           </div>
           <button className="leave-seat-button" onClick={leaveSeat}>
@@ -435,7 +459,7 @@ export const Audience: React.FunctionComponent = () => {
                             className={seat ? "seat" : "not-seat"}
                             onClick={() =>
                               seat && seatedPartygoer === null
-                                ? takeSeat(row, column)
+                                ? takeSeat(row, column, handUp)
                                 : seatedPartygoer !== null
                                 ? setSelectedUserProfile(seatedPartygoer)
                                 : null
@@ -454,6 +478,7 @@ export const Audience: React.FunctionComponent = () => {
                                   }
                                   miniAvatars={venue.miniAvatars}
                                   isAudioEffectDisabled={isAudioEffectDisabled}
+                                  isHandUp={handUp}
                                 />
                               </div>
                             )}
@@ -483,6 +508,7 @@ export const Audience: React.FunctionComponent = () => {
     venueId,
     iframeUrl,
     isAudioEffectDisabled,
+    handUp,
     handleSubmit,
     register,
     isShoutSent,

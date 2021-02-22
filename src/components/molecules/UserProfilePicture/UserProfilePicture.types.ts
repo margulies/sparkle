@@ -13,4 +13,5 @@ export interface UserProfilePictureProp {
   reactionPosition?: "right" | "left" | undefined;
   showNametags?: boolean;
   currentVenue?: WithId<AnyVenue>;
+  isHandUp?: boolean;
 }

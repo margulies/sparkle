@@ -81,3 +81,22 @@ $borderWidth: 5px;
     }
   }
 }
+
+.handUp {
+  color: red;
+  filter: drop-shadow(1px 1px 5px black);
+  transform: translate(200%, -30%) scale(1.5);
+  z-index: z(user-profile-picture-reaction);
+
+  animation: blink 2s ease-out infinite;
+}
+
+@keyframes blink {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}

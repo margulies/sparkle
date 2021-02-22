@@ -25,6 +25,8 @@ import * as S from "./UserProfilePicture.styles";
 import { useReactions } from "hooks/useReactions";
 import { useVenueId } from "hooks/useVenueId";
 import { useConnectCurrentVenueNG } from "hooks/useConnectCurrentVenueNG";
+import { faHandPaper } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // @debt This component should be divided into a few with simpler logic. Also, remove `styled components`
 const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
@@ -36,6 +38,7 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
   setSelectedUserProfile,
   reactionPosition,
   user,
+  isHandUp,
 }) => {
   const muteReactions = useSelector((state) => state.room.mute);
 
@@ -125,6 +128,9 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
           {shouldShowNametags && (
             <div className="profile-name-avatar">{user.partyName}</div>
           )}
+          {isHandUp && (
+            <FontAwesomeIcon className="handUp" icon={faHandPaper} />
+          )}
         </S.Avatar>
         {Reactions.map(
           (reaction, index) =>
@@ -175,6 +181,7 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
     reactions,
     muteReactions,
     isAudioEffectDisabled,
+    isHandUp,
     shouldShowNametags,
     shouldShowFireworks,
   ]);
