@@ -12,8 +12,8 @@ export const makeUpdateUserGridLocation = ({
 }: MakeUpdateUserGridLocationProps) => (
   row: number | null,
   column: number | null,
-  handUp?: boolean | false,
-  handOpt?: boolean
+  handUp: boolean | false,
+  handOpt?: boolean | false
 ) => {
   const firestore = firebase.firestore();
 

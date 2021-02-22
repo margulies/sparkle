@@ -93,7 +93,7 @@ export const Map: React.FC<MapProps> = ({
       makeUpdateUserGridLocation({
         venueId,
         userUid,
-      })(row, column);
+      })(row, column, false);
 
       setLocationData({ userId: userUid, locationName: venueName });
     },
