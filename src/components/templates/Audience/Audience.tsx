@@ -275,8 +275,8 @@ export const Audience: React.FunctionComponent = () => {
       })(row, column, handUp, handOpt);
     };
     const leaveSeat = () => {
+      takeSeat(null, null, false);
       setHandUp(false);
-      takeSeat(null, null, handUp);
     };
 
     const toggleHand = () => {
@@ -478,7 +478,7 @@ export const Audience: React.FunctionComponent = () => {
                                   }
                                   miniAvatars={venue.miniAvatars}
                                   isAudioEffectDisabled={isAudioEffectDisabled}
-                                  isHandUp={handUp}
+                                  // isHandUp={!!Number(profile.handUpAt) ? true : false}
                                 />
                               </div>
                             )}

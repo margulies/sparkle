@@ -38,7 +38,7 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
   setSelectedUserProfile,
   reactionPosition,
   user,
-  isHandUp,
+  //isHandUp,
 }) => {
   const muteReactions = useSelector((state) => state.room.mute);
 
@@ -69,11 +69,13 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
 
   useEffect(() => {
     avatarUrl(user.id, user.anonMode, user.pictureUrl);
-  }, [avatarUrl, user.anonMode, user.id, user.pictureUrl]);
+  }, [avatarUrl, user.anonMode, user.id, user.pictureUrl, user.handUpAt]);
 
   const venueId = useVenueId();
   const { currentVenue } = useConnectCurrentVenueNG(venueId);
   const reactions = useReactions(venueId);
+
+  const isHandUp = !!Number(user.handUpAt) ? true : false;
 
   const typedReaction = reactions ?? [];
 

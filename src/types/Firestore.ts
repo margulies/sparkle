@@ -68,6 +68,7 @@ export interface FirestoreData {
   userPurchaseHistory?: Record<string, Purchase>;
   userRoles?: Record<string, Role>;
   worldUsers?: Record<string, User>;
+  handsRaised?: Record<string, User>;
   venueChatMessages?: Record<string, VenueChatMessage>;
   venueEvents?: Record<string, VenueEvent>;
   venues?: Record<string, AnyVenue>;
@@ -97,6 +98,7 @@ export interface FirestoreOrdered {
   userPurchaseHistory?: Array<WithId<Purchase>>;
   privateChatMessages?: Array<WithId<PrivateChatMessage>>;
   worldUsers?: Array<WithId<User>>;
+  handsRaised?: Array<WithId<User>>;
   venueChatMessages?: Array<WithId<VenueChatMessage>>;
   venueEvents?: Array<WithId<VenueEvent>>;
   venues?: Array<WithId<AnyVenue>>;

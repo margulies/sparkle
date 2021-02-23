@@ -5,7 +5,11 @@ import { User } from "types/User";
 import { WithId } from "utils/id";
 import { normalizeTimestampToMilliseconds } from "utils/time";
 
-import { worldUsersByIdSelector, worldUsersSelector } from "utils/selectors";
+import {
+  worldUsersByIdSelector,
+  worldUsersSelector,
+  orderedHandsRaisedSelector,
+} from "utils/selectors";
 
 import { useSelector } from "./useSelector";
 import { useUserLastSeenThreshold } from "./useUserLastSeenThreshold";
@@ -131,4 +135,35 @@ export const useRecentVenueUsers = () => {
     recentVenueUsers: recentLocationUsers,
     isRecentVenueUsersLoaded: isRecentLocationUsersLoaded,
   };
+};
+
+export const useConnectHandsRaised = () => {
+  const venueId = useVenueId();
+
+  useFirestoreConnect(() => {
+    return [
+      {
+        collection: "users",
+        where: [`data.${venueId}.handUp`, "==", true],
+        storeAs: "handsRaised",
+      },
+    ];
+  });
+};
+
+export const useHandsRaised = (): {
+  handsRaised: WithId<User>[];
+  isHandsRaisedLoaded: boolean;
+} => {
+  useConnectHandsRaised();
+
+  const selectedHandsRaised = useSelector(orderedHandsRaisedSelector);
+
+  return useMemo(
+    () => ({
+      handsRaised: selectedHandsRaised ?? [],
+      isHandsRaisedLoaded: isLoaded(selectedHandsRaised),
+    }),
+    [selectedHandsRaised]
+  );
 };

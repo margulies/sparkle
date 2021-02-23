@@ -23,6 +23,7 @@ export interface User {
   data?: UserExperienceData;
   lastSeenIn: { [key: string]: number };
   lastSeenAt: number;
+  handUpAt?: firebase.firestore.Timestamp;
   room?: string;
   // @debt typing - user also has a dynamic set of attributes for the question answers
   // currently not possible to type them properly

@@ -22,6 +22,17 @@
     z-index: z(user-avatar-status-dot);
   }
 
+  &__status-hand {
+    position: absolute;
+    top: 0px;
+    right: -8px;
+    border-radius: 50%;
+    color: $red;
+    height: 15px;
+    width: 15px;
+    z-index: z(user-avatar-status-dot);
+  }
+
   &--clickable {
     cursor: pointer;
 

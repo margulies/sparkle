@@ -82,6 +82,19 @@ export const orderedVenuesSelector: SparkleSelector<
 > = (state) => state.firestore.ordered.venues;
 
 /**
+ * Selector to retrieve venues from the Redux Firestore.
+ *
+ * @param state the Redux store
+ */
+export const handsRaisedSelector: SparkleSelector<
+  Record<string, User> | undefined
+> = (state) => state.firestore.data.handsRaised;
+
+export const orderedHandsRaisedSelector: SparkleSelector<
+  WithId<User>[] | undefined
+> = (state) => state.firestore.ordered.handsRaised;
+
+/**
  * Makes a venueSelector selector for a given venueId, which when called
  * will retrieve the specified venue from the Redux Firestore.
  *

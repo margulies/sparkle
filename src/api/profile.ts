@@ -1,5 +1,6 @@
 import Bugsnag from "@bugsnag/js";
 import firebase from "firebase/app";
+import { getCurrentTimeInMilliseconds } from "utils/time";
 
 export interface MakeUpdateUserGridLocationProps {
   venueId: string;
@@ -55,5 +56,16 @@ export const makeUpdateUserGridLocation = ({
 
         firestore.doc(doc).set(newData);
       });
+  }
+  if (handUp) {
+    const handUpAt = getCurrentTimeInMilliseconds();
+    firestore
+      .doc(doc)
+      .update({ handUpAt: handUpAt })
+      .catch((err) => {
+        firestore.doc(doc).set({ handUpAt: handUpAt });
+      });
+  } else {
+    firestore.doc(doc).update({ handUpAt: null });
   }
 };

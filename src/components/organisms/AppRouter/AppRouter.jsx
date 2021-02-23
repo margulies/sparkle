@@ -34,6 +34,7 @@ import { venueLandingUrl } from "utils/url";
 import { RoomsForm } from "pages/Admin/Venue/Rooms/RoomsForm";
 import { SchedulePage } from "pages/Schedule/SchedulePage";
 import { VenueAdminPage } from "pages/Admin/Venue/VenueAdminPage";
+import { VenuePresenterPage } from "pages/Admin/Venue/VenuePresenterPage";
 
 const AppRouter = () => {
   return (
@@ -72,6 +73,7 @@ const AppRouter = () => {
         <Route path="/v/:venueId" component={VenueLandingPage} />
         <Route path="/e/:step/:venueId" component={VenueEntrancePage} />
         <Route path="/in/:venueId/admin" component={VenueAdminPage} />
+        <Route path="/in/:venueId/presenter" component={VenuePresenterPage} />
         <Route path="/in/:venueId" component={VenuePage} />
         <Route path="/version" component={VersionPage} />
         <Route path="/playa/schedule" component={SchedulePage} />
