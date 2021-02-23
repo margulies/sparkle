@@ -199,7 +199,7 @@ export const AdminSidebar: React.FC = () => {
           Scan to view this panel on your phone or tablet during the
           presentation:
           <QRCode
-            value="http://localhost:3000/in/auditorium/presenter"
+            value="http://primedre.space/in/auditorium/presenter"
             size={100}
             fgColor="#000000"
             bgColor="#ffffff"
