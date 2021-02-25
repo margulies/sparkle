@@ -555,10 +555,6 @@ exports.updateVenue = functions.https.onCall(async (data, context) => {
     updated.showNametags = data.showNametags;
   }
 
-  if (typeof data.showFireworks === "boolean") {
-    updated.showFireworks = data.showFireworks;
-  }
-
   updated.requiresDateOfBirth = data.requiresDateOfBirth || false;
 
   switch (updated.template) {

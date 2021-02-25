@@ -102,7 +102,6 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
       requiresDateOfBirth: venue.requiresDateOfBirth,
       showBadges: venue.showBadges,
       showNametags: venue.showNametags,
-      showFireworks: venue.showFireworks,
       showGrid: venue.showGrid,
       showRadio: venue.showRadio,
       showZendesk: venue.showZendesk,
@@ -315,13 +314,6 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
         />
 
         {renderShowNametags()}
-
-        <ToggleElement
-          forwardRef={register}
-          isChecked={values.showFireworks}
-          name="showFireworks"
-          title="Show fireworks"
-        />
 
         <ToggleElement
           forwardRef={register}
