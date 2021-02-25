@@ -17,7 +17,7 @@ export const Avatar = styled.div<AvatarProps>`
   &:hover .only-hover {
     display: flex;
   }
-  &:hover .profile-name-avatar {
+  &:hover .profile-name-avatar-hover {
     transform: scale(1.5) translate(-35%, 50%);
     opacity: 1;
     box-shadow: 0 0 0 3px lighten(blue, 10%), 0 2px 4px rgba($black, 0.2);

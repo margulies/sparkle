@@ -15,7 +15,6 @@ import {
   DEFAULT_PROFILE_IMAGE,
   RANDOM_AVATARS,
   DEFAULT_SHOW_AVATAR_NAMETAG,
-  DEFAULT_SHOW_AVATAR_FIREWORKS,
 } from "settings";
 
 // Styles
@@ -83,11 +82,13 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
     (r) => r.reaction === "messageToTheBand" && r.created_by === user.id
   ) as MessageToTheBandReaction | undefined;
 
-  const shouldShowNametags =
+  const shouldShowNametags: string =
     currentVenue?.showNametags ?? DEFAULT_SHOW_AVATAR_NAMETAG;
 
-  const shouldShowFireworks =
-    currentVenue?.showFireworks ?? DEFAULT_SHOW_AVATAR_FIREWORKS;
+  const nametagClass =
+    shouldShowNametags === "hover"
+      ? "profile-name-avatar profile-name-avatar-hover"
+      : "profile-name-avatar";
 
   const imageErrorHandler = useCallback(
     (
@@ -119,16 +120,8 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
           backgroundImage={pictureUrl}
           style={{ ...avatarStyle }}
         >
-          {shouldShowFireworks && (
-            <div className="only-hover">
-              <div className="pyro">
-                <div className="before"></div>
-                <div className="after"></div>
-              </div>
-            </div>
-          )}
-          {shouldShowNametags && (
-            <div className="profile-name-avatar">{user.partyName}</div>
+          {shouldShowNametags !== "none" && (
+            <div className={nametagClass}>{user.partyName}</div>
           )}
           {isHandUp && (
             <FontAwesomeIcon className="handUp" icon={faHandPaper} />
@@ -185,7 +178,7 @@ const UserProfilePicture: React.FC<UserProfilePictureProp> = ({
     isAudioEffectDisabled,
     isHandUp,
     shouldShowNametags,
-    shouldShowFireworks,
+    nametagClass,
   ]);
 };
 
