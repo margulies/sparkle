@@ -17,28 +17,30 @@
         }
       ],
       "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    }
+  ],
+  "headers": [
+    {
+      "source": "**/*.@(jpg|jpeg|gif|png)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://meet.primedre.space"
+        }
+      ]
     },
     {
-      "target": "sparkle-kotr",
-      "public": "build",
-      "rewrites": [
+      "source": "**/api/v1/*",
+      "headers": [
         {
-          "source": "**",
-          "destination": "/index.html"
-        }
-      ],
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
-    },
-    {
-      "target": "sparkle-memrise",
-      "public": "build",
-      "rewrites": [
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://chat.primedre.space"
+        },
         {
-          "source": "**",
-          "destination": "/index.html"
+          "key": "Access-Control-Allow-Credentials",
+          "value": "true"
         }
-      ],
-      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+      ]
     }
   ],
   "functions": {
