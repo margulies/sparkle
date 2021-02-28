@@ -140,7 +140,7 @@ const Jitsi: React.FC<Props> = (props: Props) => {
         avatar: profile?.pictureUrl || "", //encodeURIComponent(profile?.pictureUrl || ""), //"https://primedre.space" + profile?.pictureUrl || "",
         tenant: JAAS_TENANT,
         apikey: JAAS_API_KEY,
-        moderator: false, // update with roles
+        moderator: true, // update with roles
         livestreaming: "true",
         recording: "true",
         transcription: "true",

@@ -37,6 +37,7 @@ const generate = (
           "outbound-call": "true",
         },
       },
+      moderator: moderator,
       iss: "chat",
       room: "*",
       sub: appId,
