@@ -97,9 +97,6 @@ export const PLAYA_HEIGHT = 2000;
 export const PLAYA_WIDTH = 3000;
 export const PLAYA_AVATAR_SIZE = 48;
 export const PLAYA_VENUE_SIZE = 40;
-export const PROFILE_IMAGE_SIZE = 30;
-export const REACTION_PROFILE_IMAGE_SIZE_SMALL = 40;
-export const REACTION_PROFILE_IMAGE_SIZE_LARGE = 50;
 export const PLAYA_ICON_SIDE_PERCENTAGE = 5;
 // Burning Seed: playa is named paddock
 export const PLAYA_IMAGE = "/maps/paddock2k.jpg";
@@ -497,5 +494,6 @@ export const RANDOM_AVATARS = [
 
 export const REACTION_TIMEOUT = 5000; // time im ms
 export const RECENT_USER_TIMEOUT_THRESHOLD = 3; // time in hr
+export const SHOW_EMOJI_IN_REACTION_PAGE = true;
 
 export const ZENDESK_URL_PREFIXES = ["/admin"];

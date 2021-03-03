@@ -411,7 +411,7 @@ exports.toggleDustStorm = functions.https.onCall(async (_data, context) => {
 });
 
 exports.updateVenue = functions.https.onCall(async (data, context) => {
-  const venueId = getVenueId(data.name);
+  const venueId = data.id || getVenueId(data.name);
   checkAuth(context);
 
   await checkUserIsOwner(venueId, context.auth.token.user_id);

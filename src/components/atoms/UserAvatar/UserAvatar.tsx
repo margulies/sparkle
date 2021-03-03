@@ -12,6 +12,7 @@ export interface UserAvatarProps {
   handUp?: boolean;
 }
 
+// @debt the UserProfilePicture component serves a very similar purpose to this, we should unify them as much as possible
 export const UserAvatar: React.FC<UserAvatarProps> = ({
   onClick,
   avatarSrc,
