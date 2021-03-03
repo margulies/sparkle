@@ -15,6 +15,7 @@ import { User } from "types/User";
 
 import { MessageToTheBandReaction, Reactions } from "utils/reactions";
 import { WithId } from "utils/id";
+import { AnyVenue } from "types/venues";
 
 import { useReactions } from "hooks/useReactions";
 import { useVenueId } from "hooks/useVenueId";
@@ -33,6 +34,9 @@ export interface UserProfilePictureProp {
   avatarStyle?: object;
   containerStyle?: object;
   reactionPosition?: "right" | "left" | undefined;
+  showNametags?: boolean;
+  currentVenue?: WithId<AnyVenue>;
+  isHandUp?: boolean;
 }
 
 // @debt This component should be divided into a few with simpler logic. Also, remove `styled components`
