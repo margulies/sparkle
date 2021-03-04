@@ -5,7 +5,12 @@ export const ConvertToEmbeddableUrl = (
   if (url?.includes("jitsi")) return url;
   if (url?.includes("youtube")) {
     url = url?.replace("watch?v=", "embed/");
-  } else if (url?.includes("vimeo") && !url?.includes("player")) {
+  } else if (
+    url?.includes("vimeo") &&
+    !url?.includes("player") &&
+    // NOTE: If you have a scheduled live event, it gives you a different embed code
+    !url?.includes("vimeo.com/event")
+  ) {
     url = url?.replace("vimeo.com/", "player.vimeo.com/video/");
   } else if (
     url?.includes("facebook.com/plugins/video.php") &&
