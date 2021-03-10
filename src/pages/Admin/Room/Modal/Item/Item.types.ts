@@ -13,4 +13,5 @@ export interface RoomModalItemProps {
   template: VenueTemplate;
   editValues?: RoomData_v2;
   customInputs?: CustomInputsType[];
+  startOpen?: boolean;
 }
