@@ -20,7 +20,7 @@ jobs:
       - run:
           command: |
             if [ $CIRCLE_BRANCH = "primedre" ]; then
-              ENV=ohbm2021
+              ENV=prime-dre
             fi
             ./node_modules/.bin/firebase use $ENV --token "$FIREBASE_TOKEN"
             ./node_modules/.bin/firebase deploy --only functions --token "$FIREBASE_TOKEN"
