@@ -19,7 +19,11 @@ export interface EventInput {
   start_time: string;
   duration_hours: number;
   price: number;
+  iframeURL?: string;
+  meetingURL?: string;
   host: string;
+  moderator?: string[];
+  speaker?: string[];
   room?: string;
 }
 
@@ -103,6 +107,7 @@ export type VenueInput = AdvancedVenueInput &
     showRadio?: boolean;
     radioStations?: string;
     showNametags?: string;
+    showProjects?: boolean;
     showZendesk?: boolean;
   };
 
