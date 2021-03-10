@@ -15,7 +15,7 @@ import { IFRAME_TEMPLATES } from "settings";
 import { useVenueId } from "hooks/useVenueId";
 import { useConnectCurrentVenueNG } from "hooks/useConnectCurrentVenueNG";
 
-import { AdminVideo } from "components/molecules/AdminVideo";
+//import { AdminVideo } from "components/molecules/AdminVideo";
 import { BannerAdmin } from "components/organisms/BannerAdmin";
 
 import "./AdminSidebar.scss";
@@ -181,7 +181,7 @@ export const AdminSidebar: React.FC = () => {
             </div>
           </div>
           <BannerAdmin venueId={venueId} venue={venue} />
-          {isVideoVenue && <AdminVideo venueId={venueId} venue={venue} />}
+          {/* {isVideoVenue && <AdminVideo venueId={venueId} venue={venue} />} */}
           {isVideoVenue && (
             <>
               <br></br>

@@ -1,12 +1,12 @@
 import React, { useMemo } from "react";
 import Countdown from "react-countdown";
 
-import { IFRAME_TEMPLATES } from "settings";
+// import { IFRAME_TEMPLATES } from "settings";
 
 import { useVenueId } from "hooks/useVenueId";
 import { useConnectCurrentVenueNG } from "hooks/useConnectCurrentVenueNG";
 
-import { AdminVideo } from "components/molecules/AdminVideo";
+// import { AdminVideo } from "components/molecules/AdminVideo";
 
 import "./VenuePresenterPage.scss";
 
@@ -120,13 +120,13 @@ export const VenuePresenterPage: React.FC = () => {
     return <></>;
   }
 
-  const isVideoVenue = IFRAME_TEMPLATES.includes(venue.template);
+  // const isVideoVenue = IFRAME_TEMPLATES.includes(venue.template);
 
   return (
     <>
       <h3>Presenter Panel</h3>
       <Countdown date={Date.now() + 10000} />
-      {isVideoVenue && <AdminVideo venueId={venueId} venue={venue} />}
+      {/* {isVideoVenue && <AdminVideo venueId={venueId} venue={venue} />} */}
 
       <>
         <h3>Hands Raised</h3>
