@@ -13,8 +13,10 @@ import { ROOM_TEMPLATES } from "settings";
 const RoomModal: React.FC<RoomModalProps> = ({
   isVisible = false,
   venueId,
+  templates = ROOM_TEMPLATES,
   onSubmitHandler,
   onClickOutsideHandler,
+  title = "Pick a room (type?)",
 }) => {
   const { user } = useUser();
 
@@ -23,16 +25,17 @@ const RoomModal: React.FC<RoomModalProps> = ({
   return (
     <Modal show={isVisible} onHide={onClickOutsideHandler} size="lg">
       <S.InnerWrapper>
-        <S.Title>Pick a room (type?)</S.Title>
+        <S.Title>{title}</S.Title>
 
-        {ROOM_TEMPLATES.length > 0 &&
-          ROOM_TEMPLATES.map((item) => (
+        {templates.length > 0 &&
+          templates.map((item) => (
             <Item
               {...item}
               key={item.name}
               venueId={venueId}
               user={user}
               onSubmitHandler={onSubmitHandler}
+              startOpen={item.startOpen}
             />
           ))}
       </S.InnerWrapper>

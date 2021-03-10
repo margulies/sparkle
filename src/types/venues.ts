@@ -71,6 +71,7 @@ export interface Venue_v2_AdvancedConfig {
   showBadges?: boolean;
   showGrid?: boolean;
   showNametags?: string;
+  showProjects?: boolean;
   showRadio?: boolean;
   showRangers?: boolean;
   showZendesk?: boolean;
@@ -145,6 +146,7 @@ export interface Venue {
   showRadio?: boolean;
   showBadges?: boolean;
   showNametags?: string;
+  showProjects?: boolean;
   showZendesk?: boolean;
 }
 
@@ -258,7 +260,11 @@ export interface VenueEvent {
   duration_minutes: number;
   price: number;
   collective_price: number;
+  iframeURL?: string;
+  meetingURL?: string;
   host: string;
+  moderator?: string[];
+  speaker?: string[];
   room?: string;
   id?: string;
 }

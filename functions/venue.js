@@ -101,6 +101,7 @@ const createVenueData = (data, context) => {
     showRadio: data.showRadio || false,
     radioStations: data.radioStations ? [data.radioStations] : [],
     showNametags: data.showNametags || "none",
+    showProjects: data.showProjects || false,
   };
 
   if (data.mapBackgroundImageUrl) {
@@ -555,6 +556,10 @@ exports.updateVenue = functions.https.onCall(async (data, context) => {
     updated.showNametags = data.showNametags;
   }
 
+  if (typeof data.showProjects === "boolean") {
+    updated.showProjects = data.showProjects;
+  }
+
   updated.requiresDateOfBirth = data.requiresDateOfBirth || false;
 
   switch (updated.template) {
@@ -689,6 +694,10 @@ exports.updateVenue_v2 = functions.https.onCall(async (data, context) => {
 
   if (data.showNametags) {
     updated.showNametags = data.showNametags;
+  }
+
+  if (data.showProjects) {
+    updated.showProjects = data.showProjects;
   }
 
   admin.firestore().collection("venues").doc(venueId).update(updated);

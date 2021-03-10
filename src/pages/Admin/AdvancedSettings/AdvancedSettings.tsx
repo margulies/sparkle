@@ -74,6 +74,7 @@ const validationSchema = Yup.object().shape<Venue_v2_AdvancedConfig>({
   requiresDateOfBirth: Yup.bool().notRequired(),
   showBadges: Yup.bool().notRequired(),
   showNametags: Yup.string().notRequired(),
+  showProjects: Yup.bool().notRequired(),
   showRadio: Yup.bool().notRequired(),
   showRangers: Yup.bool().notRequired(),
   showZendesk: Yup.bool().notRequired(),
@@ -104,6 +105,7 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
       showNametags: venue.showNametags,
       showGrid: venue.showGrid,
       showRadio: venue.showRadio,
+      showProjects: venue.showProjects,
       showZendesk: venue.showZendesk,
       showRangers: venue.showRangers,
       bannerMessage: venue.bannerMessage,
@@ -337,6 +339,13 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
         />
 
         {renderRadioToggle()}
+
+        <ToggleElement
+          forwardRef={register}
+          isChecked={values.showProjects}
+          name="showProjects"
+          title="Allow attendees to create project pages"
+        />
 
         {renderRoomVisibility()}
 

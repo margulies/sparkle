@@ -831,6 +831,23 @@ const DetailsFormLeft: React.FC<DetailsFormLeftProps> = ({
     </div>
   );
 
+  const renderProjectsToggle = () => (
+    <div className="toggle-room">
+      <h4 className="italic input-header">
+        Enable attendees to create project rooms
+      </h4>
+      <label id="showProjects" className="switch">
+        <input
+          type="checkbox"
+          id="showProjects"
+          name="showProjects"
+          ref={register}
+        />
+        <span className="slider round" />
+      </label>
+    </div>
+  );
+
   return (
     <form className="full-height-container" onSubmit={handleSubmit(onSubmit)}>
       <input type="hidden" name="template" value={templateID} ref={register} />
@@ -910,6 +927,8 @@ const DetailsFormLeft: React.FC<DetailsFormLeftProps> = ({
 
         {renderRadioToggle()}
         {values.showRadio && renderRadioStationInput()}
+
+        {renderProjectsToggle()}
 
         {templateID &&
           HAS_GRID_TEMPLATES.includes(templateID) &&

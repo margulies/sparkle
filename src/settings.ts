@@ -347,6 +347,7 @@ export type RoomTemplate = {
   icon: string;
   url?: string;
   customInputs?: CustomInputsType[];
+  startOpen?: boolean;
 };
 export const ROOM_TEMPLATES: RoomTemplate[] = [
   {
@@ -425,6 +426,28 @@ export const ROOM_TEMPLATES: RoomTemplate[] = [
   },
 ];
 
+export const PROJECT_ROOM_TEMPLATES: RoomTemplate[] = [
+  {
+    template: VenueTemplate.artpiece,
+    name: "Project",
+    description: "Create a Brainhack project space",
+    icon: "/venues/pickspace-thumbnail_art.png",
+    customInputs: [
+      // {
+      //   name: "iframeUrl",
+      //   title: "Livestream URL",
+      //   type: "text",
+      // },
+      // {
+      //   name: "bannerMessage",
+      //   title: "Show an announcement in the venue (or leave blank for none)",
+      //   type: "text",
+      // },
+    ],
+    startOpen: true,
+  },
+];
+
 export const HAS_ROOMS_TEMPLATES: Array<VenueTemplate> = [
   VenueTemplate.themecamp,
   VenueTemplate.partymap,
@@ -466,7 +489,7 @@ export const FIREBASE_CONFIG = {
   storageBucket: BUCKET_URL,
 };
 
-export const DEFAULT_VENUE = "zilloween";
+export const DEFAULT_VENUE = "primedre";
 export const DEFAULT_REDIRECT_URL = IS_BURN ? "/enter" : HOMEPAGE_URL;
 
 // Trouble connecting? Run a local relay:

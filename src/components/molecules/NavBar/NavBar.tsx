@@ -5,9 +5,15 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTicketAlt } from "@fortawesome/free-solid-svg-icons";
 
+import Button from "components/atoms/Button";
+
 import firebase from "firebase/app";
 
-import { DEFAULT_PROFILE_IMAGE, PLAYA_VENUE_ID } from "settings";
+import {
+  DEFAULT_PROFILE_IMAGE,
+  PLAYA_VENUE_ID,
+  PROJECT_ROOM_TEMPLATES,
+} from "settings";
 import { IS_BURN } from "secrets";
 
 import { UpcomingEvent } from "types/UpcomingEvent";
@@ -34,6 +40,8 @@ import { SchedulePageModal } from "components/organisms/SchedulePageModal/Schedu
 import NavSearchBar from "components/molecules/NavSearchBar";
 import UpcomingTickets from "components/molecules/UpcomingTickets";
 import { VenuePartygoers } from "components/molecules/VenuePartygoers";
+
+import RoomModal from "pages/Admin/Room/Modal";
 
 import { NavBarLogin } from "./NavBarLogin";
 
@@ -137,6 +145,18 @@ const NavBar: React.FC<NavBarPropsType> = ({
     return false;
   }, [radioFirstPlayStateLoaded]);
 
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const closeModal = useCallback(() => setModalOpen(false), []);
+
+  const [, setIsEditing] = useState<boolean>(false);
+  const handleNewRoom = useCallback(() => {
+    setModalOpen(false);
+    setIsEditing(true);
+  }, []);
+  const toggleRoomModal = useCallback(() => setModalOpen(!modalOpen), [
+    modalOpen,
+  ]);
+
   const [isEventScheduleVisible, setEventScheduleVisible] = useState(false);
   const toggleEventSchedule = useCallback(() => {
     setEventScheduleVisible(!isEventScheduleVisible);
@@ -177,6 +197,8 @@ const NavBar: React.FC<NavBarPropsType> = ({
 
   const showNormalRadio = (venue?.showRadio && !isSoundCloud) ?? false;
   const showSoundCloudRadio = (venue?.showRadio && isSoundCloud) ?? false;
+
+  const showProjects = venue?.showProjects ?? false;
 
   return (
     <>
@@ -235,7 +257,11 @@ const NavBar: React.FC<NavBarPropsType> = ({
                     </span>
                   </OverlayTrigger>
                 )}
-
+                {showProjects && (
+                  <Button onClick={toggleRoomModal} gradient>
+                    Create a project
+                  </Button>
+                )}
                 {showNormalRadio && (
                   <OverlayTrigger
                     trigger="click"
@@ -326,6 +352,16 @@ const NavBar: React.FC<NavBarPropsType> = ({
             Back{parentVenue ? ` to ${parentVenue.name}` : ""}
           </span>
         </div>
+      )}
+      {showProjects && (
+        <RoomModal
+          isVisible={modalOpen}
+          venueId={venueId!}
+          templates={PROJECT_ROOM_TEMPLATES}
+          onSubmitHandler={handleNewRoom}
+          onClickOutsideHandler={closeModal}
+          title={"Create a project room"}
+        />
       )}
     </>
   );

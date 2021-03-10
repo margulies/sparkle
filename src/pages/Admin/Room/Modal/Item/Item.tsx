@@ -24,8 +24,9 @@ const RoomModalItem: React.FC<RoomModalItemProps> = ({
   template,
   editValues,
   customInputs,
+  startOpen = false,
 }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(startOpen);
   const [useUrl, setUseUrl] = useState<boolean>(false);
 
   const toggleIsOpen = () => setIsOpen(!isOpen);
