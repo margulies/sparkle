@@ -341,6 +341,26 @@ exports.upsertRoom = functions.https.onCall(async (data, context) => {
   admin.firestore().collection("venues").doc(venueId).update(docData);
 });
 
+exports.upsertProject = functions.https.onCall(async (data, context) => {
+  checkAuth(context);
+  const { venueId, roomIndex, room } = data;
+  // await checkUserIsOwner(venueId, context.auth.token.user_id);
+  const doc = await admin.firestore().collection("venues").doc(venueId).get();
+
+  if (!doc || !doc.exists) {
+    throw new HttpsError("not-found", `Venue ${venueId} not found`);
+  }
+  const docData = doc.data();
+
+  if (typeof roomIndex !== "number") {
+    docData.rooms = [...docData.rooms, room];
+  } else {
+    docData.rooms[roomIndex] = room;
+  }
+
+  admin.firestore().collection("venues").doc(venueId).update(docData);
+});
+
 exports.deleteRoom = functions.https.onCall(async (data, context) => {
   checkAuth(context);
   const { venueId, room } = data;

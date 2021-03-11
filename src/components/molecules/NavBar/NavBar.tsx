@@ -41,7 +41,7 @@ import NavSearchBar from "components/molecules/NavSearchBar";
 import UpcomingTickets from "components/molecules/UpcomingTickets";
 import { VenuePartygoers } from "components/molecules/VenuePartygoers";
 
-import RoomModal from "pages/Admin/Room/Modal";
+import ProjectModal from "pages/Admin/Project/Modal";
 
 import { NavBarLogin } from "./NavBarLogin";
 
@@ -354,13 +354,13 @@ const NavBar: React.FC<NavBarPropsType> = ({
         </div>
       )}
       {showProjects && (
-        <RoomModal
+        <ProjectModal
           isVisible={modalOpen}
           venueId={venueId!}
           templates={PROJECT_ROOM_TEMPLATES}
           onSubmitHandler={handleNewRoom}
           onClickOutsideHandler={closeModal}
-          title={"Create a project room"}
+          title={"Create a project"}
         />
       )}
     </>
