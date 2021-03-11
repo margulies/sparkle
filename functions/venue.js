@@ -344,7 +344,6 @@ exports.upsertRoom = functions.https.onCall(async (data, context) => {
 exports.upsertProject = functions.https.onCall(async (data, context) => {
   checkAuth(context);
   const { venueId, roomIndex, room } = data;
-  // await checkUserIsOwner(venueId, context.auth.token.user_id);
   const doc = await admin.firestore().collection("venues").doc(venueId).get();
 
   if (!doc || !doc.exists) {

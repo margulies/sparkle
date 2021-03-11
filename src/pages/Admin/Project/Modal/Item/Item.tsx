@@ -27,7 +27,7 @@ const ProjectModalItem: React.FC<ProjectModalItemProps> = ({
   startOpen = false,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(startOpen);
-  // const [useUrl, setUseUrl] = useState<boolean>(false);
+  const [useUrl, setUseUrl] = useState<boolean>(false);
 
   const toggleIsOpen = () => setIsOpen(!isOpen);
 
@@ -86,7 +86,7 @@ const ProjectModalItem: React.FC<ProjectModalItemProps> = ({
       };
 
       try {
-        if (!editValues) {
+        if (!editValues && !useUrl) {
           await createVenue_v2(venueInput, user);
         }
         await createProject(valuesWithTemplate, venueId, user);
@@ -98,21 +98,46 @@ const ProjectModalItem: React.FC<ProjectModalItemProps> = ({
     } catch (err) {
       console.error(err);
     }
-  }, [editValues, onSubmitHandler, template, user, values, venueId]);
+  }, [editValues, onSubmitHandler, template, useUrl, user, values, venueId]);
 
   const handleOnChange = (val: string) => setValue("image_url", val);
+
+  const handleUrlToggle = useCallback(() => {
+    setUseUrl((value) => !value);
+  }, []);
+
+  const renderUrlToggle = () => (
+    <S.UrlToggleWrapper>
+      <S.Flex>
+        <h4 className="italic input-header">Create project space</h4>
+      </S.Flex>
+      <S.Flex>
+        <label id={"useUrl"} className="switch">
+          <input
+            type="checkbox"
+            id={"useUrl"}
+            name={"useUrl"}
+            checked={useUrl}
+            onChange={handleUrlToggle}
+            ref={register}
+          />
+          <span className="slider round"></span>
+        </label>
+      </S.Flex>
+      <S.Flex>
+        <h4 className="italic input-header">Use external space</h4>
+      </S.Flex>
+    </S.UrlToggleWrapper>
+  );
 
   const renderVenueNameInput = () => (
     <Fragment>
       <S.InputWrapper key={"venueName"}>
-        <span>
-          Project name (without spaces) - this will be used to create the
-          project URL
-        </span>
+        <span>Short project name (for creating link)</span>
 
         <input
           type="text"
-          placeholder="Projectname"
+          placeholder="projectname"
           name={"venueName"}
           ref={register}
         />
@@ -124,6 +149,21 @@ const ProjectModalItem: React.FC<ProjectModalItemProps> = ({
     </Fragment>
   );
 
+  const renderUrlInput = () => (
+    <Fragment>
+      <S.InputWrapper key={"url"}>
+        <span>Where your project will be meeting</span>
+        <input
+          type="text"
+          ref={register}
+          name="url"
+          placeholder="Project url"
+        />
+      </S.InputWrapper>
+      {errors.url && <span className="input-error">{errors.url.message}</span>}
+    </Fragment>
+  );
+
   const renderNameInput = () => (
     <Fragment>
       <S.InputWrapper>
@@ -132,7 +172,7 @@ const ProjectModalItem: React.FC<ProjectModalItemProps> = ({
           type="text"
           ref={register}
           name="title"
-          placeholder="Project name"
+          placeholder="Project name (shown on map)"
         />
       </S.InputWrapper>
       {errors.title && (
@@ -198,10 +238,12 @@ const ProjectModalItem: React.FC<ProjectModalItemProps> = ({
 
       <S.InnerWrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
+          {renderUrlToggle()}
+
+          {!useUrl && renderVenueNameInput()}
+          {useUrl && renderUrlInput()}
+
           {renderNameInput()}
-
-          {renderVenueNameInput()}
-
           {renderDescriptionInput()}
 
           {customInputs &&

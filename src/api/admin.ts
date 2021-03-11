@@ -556,6 +556,7 @@ export const createProject = async (
       y_percent: 50,
       width_percent: 5,
       height_percent: 5,
+      isEnabled: false,
     },
   });
 };
